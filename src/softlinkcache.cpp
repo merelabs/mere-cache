@@ -1,5 +1,5 @@
 #include "softlinkcache.h"
-#include "lrucache.h"
+#include "policy/lrucache.h"
 
 #include "mere/utils/fileutils.h"
 
@@ -10,6 +10,11 @@
 
 Mere::Cache::SoftLinkCache::~SoftLinkCache()
 {
+    if (m_cache)
+    {
+        delete m_cache;
+        m_cache = nullptr;
+    }
 }
 
 Mere::Cache::SoftLinkCache::SoftLinkCache()
@@ -18,13 +23,31 @@ Mere::Cache::SoftLinkCache::SoftLinkCache()
 }
 
 Mere::Cache::SoftLinkCache::SoftLinkCache(const std::string &path)
-    : Mere::Cache::DiskCache(path),
-      m_cache(nullptr)
+    : Mere::Cache::LinkCache(path),
+      m_cache(new Policy::LRUCache(100))
 {
+}
+
+bool Mere::Cache::SoftLinkCache::has(const std::string &key)
+{
+    if (key.empty()) return false;
+
+    if (m_cache && m_cache->has(key))
+        return false;
+
+    std::string path(this->path());
+    path.append(key);
+    return Mere::Utils::FileUtils::isExist(path);
 }
 
 std::string Mere::Cache::SoftLinkCache::get(const std::string &key, bool *flag)
 {
+    if (key.empty())
+    {
+        if (flag) *flag = false;
+        return "";
+    }
+
     if (m_cache)
     {
         bool _flag;
@@ -55,19 +78,26 @@ std::string Mere::Cache::SoftLinkCache::get(const std::string &key, bool *flag)
 
     std::string value(link);
 
-    if (m_cache) m_cache->set(key, value);
+    if (m_cache)
+    {
+        m_cache->set(key, value);
+    }
 
     return value;
 }
 
-void Mere::Cache::SoftLinkCache::set(const std::string &key, const std::string &link)
+void Mere::Cache::SoftLinkCache::set(const std::string &key, const std::string &value, bool *flag)
 {
-    if (key.empty()) return;
+    if (key.empty())
+    {
+        if (flag) *flag = false;
+        return;
+    }
 
     auto pos = key.find("/");
     if (pos != std::string::npos) return;
 
-    if (link.empty())
+    if (value.empty())
     {
         std::string path(this->path());
         path.append(key);
@@ -78,13 +108,16 @@ void Mere::Cache::SoftLinkCache::set(const std::string &key, const std::string &
     }
 
     // set it
-    if(m_cache) m_cache->set(key, link);
+    if(m_cache)
+    {
+        m_cache->set(key, value);
+    }
 
     std::string path(this->path());
-    symlink(link.c_str(), path.append(key).c_str());
+    symlink(value.c_str(), path.append(key).c_str());
 }
 
-void Mere::Cache::SoftLinkCache::setCache(LRUCache *cache)
-{
-    m_cache = cache;
-}
+//void Mere::Cache::SoftLinkCache::setPolicy(Cache *cache)
+//{
+//    m_cache = cache;
+//}
