@@ -12,11 +12,13 @@ class Cache
 {
 public:
     virtual ~Cache();
-    Cache();
+    explicit Cache();
 
-    virtual bool has(const std::string &key) const = 0;
+    virtual bool has(const std::string &key) = 0;
     virtual std::string get(const std::string &key, bool *flag = nullptr) = 0;
     virtual void set(const std::string &key, const std::string &value, bool *flag = nullptr) = 0;
+
+    virtual void evict() = 0;
 };
 }
 }

@@ -1,23 +1,22 @@
-#include "lrucache.h"
-#include <iostream>
-#include <algorithm>
-#include <utility>
+#include "mrucache.h"
 
-Mere::Cache::LRUCache::~LRUCache()
+Mere::Cache::MRUCache::~MRUCache()
 {
+
 }
 
-Mere::Cache::LRUCache::LRUCache(int capacity)
+Mere::Cache::MRUCache::MRUCache(int capacity)
     : m_capacity(capacity)
 {
+
 }
 
-bool Mere::Cache::LRUCache::has(const std::string &key)
+bool Mere::Cache::MRUCache::has(const std::string &key)
 {
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::LRUCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::MRUCache::get(const std::string &key, bool *flag)
 {
     auto it = m_cache.find(key);
     if (it == m_cache.cend())
@@ -34,7 +33,7 @@ std::string Mere::Cache::LRUCache::get(const std::string &key, bool *flag)
     return it->second->second;
 }
 
-void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::MRUCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     auto it = m_cache.find(key);
     if (it == m_cache.cend())
@@ -44,7 +43,7 @@ void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value
         if (m_pairs.size() == m_capacity)
             evict();
 
-        m_pairs.push_back({key, value});
+        m_pairs.push_front({key, value});
     }
     else
     {
@@ -53,17 +52,12 @@ void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value
             m_pairs.splice(m_pairs.end(), m_pairs, it->second);
     }
 
-    m_cache.insert({key, std::prev(m_pairs.end())});
+    m_cache.insert({key, m_pairs.begin()});
 }
 
-void Mere::Cache::LRUCache::evict()
+void Mere::Cache::MRUCache::evict()
 {
-    m_cache.erase(m_pairs.front().first);
-    m_pairs.pop_front();
+    m_cache.erase(m_pairs.back().first);
+    m_pairs.pop_back();
 }
 
-void Mere::Cache::LRUCache::print()
-{
-    for (auto& cache : m_cache)
-        std::cout << cache.first << "\t => " << cache.second->second << std::endl;
-}

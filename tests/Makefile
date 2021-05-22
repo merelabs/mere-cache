@@ -53,10 +53,14 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = src/main.cpp \
-		src/testlrucache.cpp moc_testlrucache.cpp
+		src/testlrucache.cpp \
+		src/testtlrucache.cpp moc_testlrucache.cpp \
+		moc_testtlrucache.cpp
 OBJECTS       = src/main.o \
 		src/testlrucache.o \
-		moc_testlrucache.o
+		src/testtlrucache.o \
+		moc_testlrucache.o \
+		moc_testtlrucache.o
 DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/common/unix.conf \
 		/usr/local/lib/qt5/mkspecs/common/bsd/bsd.conf \
@@ -383,8 +387,10 @@ DIST          = /usr/local/lib/qt5/mkspecs/features/spec_pre.prf \
 		/usr/local/lib/qt5/mkspecs/features/exceptions.prf \
 		/usr/local/lib/qt5/mkspecs/features/yacc.prf \
 		/usr/local/lib/qt5/mkspecs/features/lex.prf \
-		tests.pro src/testlrucache.h src/main.cpp \
-		src/testlrucache.cpp
+		tests.pro src/testlrucache.h \
+		src/testtlrucache.h src/main.cpp \
+		src/testlrucache.cpp \
+		src/testtlrucache.cpp
 QMAKE_TARGET  = tests
 DESTDIR       = 
 TARGET        = tests
@@ -1066,8 +1072,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents src/testlrucache.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/testlrucache.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents src/testlrucache.h src/testtlrucache.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/testlrucache.cpp src/testtlrucache.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1098,9 +1104,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 	clang++ -pipe -O2 -dM -E -o moc_predefs.h /usr/local/lib/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_testlrucache.cpp
+compiler_moc_header_make_all: moc_testlrucache.cpp moc_testtlrucache.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_testlrucache.cpp
+	-$(DEL_FILE) moc_testlrucache.cpp moc_testtlrucache.cpp
 moc_testlrucache.cpp: src/testlrucache.h \
 		/usr/local/include/qt5/QtTest/QtTest \
 		/usr/local/include/qt5/QtTest/QtTestDepends \
@@ -1425,6 +1431,331 @@ moc_testlrucache.cpp: src/testlrucache.h \
 		moc_predefs.h \
 		/usr/local/lib/qt5/bin/moc
 	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-cache/tests/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-cache/tests -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtTest -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/11.0.1/include -I/usr/include src/testlrucache.h -o moc_testlrucache.cpp
+
+moc_testtlrucache.cpp: src/testtlrucache.h \
+		/usr/local/include/qt5/QtTest/QtTest \
+		/usr/local/include/qt5/QtTest/QtTestDepends \
+		/usr/local/include/qt5/QtCore/QtCore \
+		/usr/local/include/qt5/QtCore/QtCoreDepends \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qabstractanimation.h \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		/usr/local/include/qt5/QtCore/qabstracteventdispatcher.h \
+		/usr/local/include/qt5/QtCore/qeventloop.h \
+		/usr/local/include/qt5/QtCore/qabstractitemmodel.h \
+		/usr/local/include/qt5/QtCore/qvariant.h \
+		/usr/local/include/qt5/QtCore/qmap.h \
+		/usr/local/include/qt5/QtCore/qdebug.h \
+		/usr/local/include/qt5/QtCore/qhash.h \
+		/usr/local/include/qt5/QtCore/qtextstream.h \
+		/usr/local/include/qt5/QtCore/qiodevice.h \
+		/usr/local/include/qt5/QtCore/qlocale.h \
+		/usr/local/include/qt5/QtCore/qshareddata.h \
+		/usr/local/include/qt5/QtCore/qset.h \
+		/usr/local/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/local/include/qt5/QtCore/qabstractnativeeventfilter.h \
+		/usr/local/include/qt5/QtCore/qabstractproxymodel.h \
+		/usr/local/include/qt5/QtCore/qabstractstate.h \
+		/usr/local/include/qt5/QtCore/qabstracttransition.h \
+		/usr/local/include/qt5/QtCore/qanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qarraydataops.h \
+		/usr/local/include/qt5/QtCore/qarraydatapointer.h \
+		/usr/local/include/qt5/QtCore/qbasictimer.h \
+		/usr/local/include/qt5/QtCore/qbitarray.h \
+		/usr/local/include/qt5/QtCore/qbuffer.h \
+		/usr/local/include/qt5/QtCore/qbytearraymatcher.h \
+		/usr/local/include/qt5/QtCore/qcache.h \
+		/usr/local/include/qt5/QtCore/qcalendar.h \
+		/usr/local/include/qt5/QtCore/qcborarray.h \
+		/usr/local/include/qt5/QtCore/qcborvalue.h \
+		/usr/local/include/qt5/QtCore/qdatetime.h \
+		/usr/local/include/qt5/QtCore/qcborcommon.h \
+		/usr/local/include/qt5/QtCore/qregularexpression.h \
+		/usr/local/include/qt5/QtCore/qurl.h \
+		/usr/local/include/qt5/QtCore/qurlquery.h \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qcbormap.h \
+		/usr/local/include/qt5/QtCore/qcborstream.h \
+		/usr/local/include/qt5/QtCore/qcborstreamreader.h \
+		/usr/local/include/qt5/QtCore/qfloat16.h \
+		/usr/local/include/qt5/QtCore/qcborstreamwriter.h \
+		/usr/local/include/qt5/QtCore/qcollator.h \
+		/usr/local/include/qt5/QtCore/qcommandlineoption.h \
+		/usr/local/include/qt5/QtCore/qcommandlineparser.h \
+		/usr/local/include/qt5/QtCore/qcoreapplication.h \
+		/usr/local/include/qt5/QtCore/qconcatenatetablesproxymodel.h \
+		/usr/local/include/qt5/QtCore/qcryptographichash.h \
+		/usr/local/include/qt5/QtCore/qdatastream.h \
+		/usr/local/include/qt5/QtCore/qdeadlinetimer.h \
+		/usr/local/include/qt5/QtCore/qelapsedtimer.h \
+		/usr/local/include/qt5/QtCore/qdir.h \
+		/usr/local/include/qt5/QtCore/qfileinfo.h \
+		/usr/local/include/qt5/QtCore/qfile.h \
+		/usr/local/include/qt5/QtCore/qfiledevice.h \
+		/usr/local/include/qt5/QtCore/qdiriterator.h \
+		/usr/local/include/qt5/QtCore/qeasingcurve.h \
+		/usr/local/include/qt5/QtCore/qendian.h \
+		/usr/local/include/qt5/QtCore/qeventtransition.h \
+		/usr/local/include/qt5/QtCore/qexception.h \
+		/usr/local/include/qt5/QtCore/qfactoryinterface.h \
+		/usr/local/include/qt5/QtCore/qfileselector.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/QStringList \
+		/usr/local/include/qt5/QtCore/qfilesystemwatcher.h \
+		/usr/local/include/qt5/QtCore/qfinalstate.h \
+		/usr/local/include/qt5/QtCore/qfuture.h \
+		/usr/local/include/qt5/QtCore/qfutureinterface.h \
+		/usr/local/include/qt5/QtCore/qrunnable.h \
+		/usr/local/include/qt5/QtCore/qresultstore.h \
+		/usr/local/include/qt5/QtCore/qfuturesynchronizer.h \
+		/usr/local/include/qt5/QtCore/qfuturewatcher.h \
+		/usr/local/include/qt5/QtCore/qhistorystate.h \
+		/usr/local/include/qt5/QtCore/qidentityproxymodel.h \
+		/usr/local/include/qt5/QtCore/qisenum.h \
+		/usr/local/include/qt5/QtCore/qitemselectionmodel.h \
+		/usr/local/include/qt5/QtCore/qjsonarray.h \
+		/usr/local/include/qt5/QtCore/qjsonvalue.h \
+		/usr/local/include/qt5/QtCore/qjsondocument.h \
+		/usr/local/include/qt5/QtCore/qjsonobject.h \
+		/usr/local/include/qt5/QtCore/qlibrary.h \
+		/usr/local/include/qt5/QtCore/qlibraryinfo.h \
+		/usr/local/include/qt5/QtCore/qversionnumber.h \
+		/usr/local/include/qt5/QtCore/qline.h \
+		/usr/local/include/qt5/QtCore/qlinkedlist.h \
+		/usr/local/include/qt5/QtCore/qlockfile.h \
+		/usr/local/include/qt5/QtCore/qloggingcategory.h \
+		/usr/local/include/qt5/QtCore/qmargins.h \
+		/usr/local/include/qt5/QtCore/qmath.h \
+		/usr/local/include/qt5/QtCore/qmessageauthenticationcode.h \
+		/usr/local/include/qt5/QtCore/qmetaobject.h \
+		/usr/local/include/qt5/QtCore/qmimedata.h \
+		/usr/local/include/qt5/QtCore/qmimedatabase.h \
+		/usr/local/include/qt5/QtCore/qmimetype.h \
+		/usr/local/include/qt5/QtCore/qobjectcleanuphandler.h \
+		/usr/local/include/qt5/QtCore/qoperatingsystemversion.h \
+		/usr/local/include/qt5/QtCore/qparallelanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qpauseanimation.h \
+		/usr/local/include/qt5/QtCore/qplugin.h \
+		/usr/local/include/qt5/QtCore/qpointer.h \
+		/usr/local/include/qt5/QtCore/qpluginloader.h \
+		/usr/local/include/qt5/QtCore/qprocess.h \
+		/usr/local/include/qt5/QtCore/qpropertyanimation.h \
+		/usr/local/include/qt5/QtCore/qvariantanimation.h \
+		/usr/local/include/qt5/QtCore/qqueue.h \
+		/usr/local/include/qt5/QtCore/qrandom.h \
+		/usr/local/include/qt5/QtCore/qreadwritelock.h \
+		/usr/local/include/qt5/QtCore/qrect.h \
+		/usr/local/include/qt5/QtCore/qsize.h \
+		/usr/local/include/qt5/QtCore/qresource.h \
+		/usr/local/include/qt5/QtCore/qsavefile.h \
+		/usr/local/include/qt5/QtCore/qscopedvaluerollback.h \
+		/usr/local/include/qt5/QtCore/qscopeguard.h \
+		/usr/local/include/qt5/QtCore/qsemaphore.h \
+		/usr/local/include/qt5/QtCore/qsequentialanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qsettings.h \
+		/usr/local/include/qt5/QtCore/qsharedmemory.h \
+		/usr/local/include/qt5/QtCore/qsignalmapper.h \
+		/usr/local/include/qt5/QtCore/qsignaltransition.h \
+		/usr/local/include/qt5/QtCore/qsocketnotifier.h \
+		/usr/local/include/qt5/QtCore/qsortfilterproxymodel.h \
+		/usr/local/include/qt5/QtCore/qstack.h \
+		/usr/local/include/qt5/QtCore/qstandardpaths.h \
+		/usr/local/include/qt5/QtCore/qstate.h \
+		/usr/local/include/qt5/QtCore/qstatemachine.h \
+		/usr/local/include/qt5/QtCore/qstorageinfo.h \
+		/usr/local/include/qt5/QtCore/qstringlistmodel.h \
+		/usr/local/include/qt5/QtCore/qsystemsemaphore.h \
+		/usr/local/include/qt5/QtCore/qtemporarydir.h \
+		/usr/local/include/qt5/QtCore/qtemporaryfile.h \
+		/usr/local/include/qt5/QtCore/qtextboundaryfinder.h \
+		/usr/local/include/qt5/QtCore/qtextcodec.h \
+		/usr/local/include/qt5/QtCore/qthread.h \
+		/usr/local/include/qt5/QtCore/qthreadpool.h \
+		/usr/local/include/qt5/QtCore/qthreadstorage.h \
+		/usr/local/include/qt5/QtCore/qtimeline.h \
+		/usr/local/include/qt5/QtCore/qtimer.h \
+		/usr/local/include/qt5/QtCore/qtimezone.h \
+		/usr/local/include/qt5/QtCore/qtranslator.h \
+		/usr/local/include/qt5/QtCore/qtransposeproxymodel.h \
+		/usr/local/include/qt5/QtCore/qtypetraits.h \
+		/usr/local/include/qt5/QtCore/qwaitcondition.h \
+		/usr/local/include/qt5/QtCore/QDeadlineTimer \
+		/usr/local/include/qt5/QtCore/qwineventnotifier.h \
+		/usr/local/include/qt5/QtCore/qxmlstream.h \
+		/usr/local/include/qt5/QtCore/qtcoreversion.h \
+		/usr/local/include/qt5/QtTest/qttestglobal.h \
+		/usr/local/include/qt5/QtTest/qttestlib-config.h \
+		/usr/local/include/qt5/QtTest/qabstractitemmodeltester.h \
+		/usr/local/include/qt5/QtCore/QAbstractItemModel \
+		/usr/local/include/qt5/QtCore/QVariant \
+		/usr/local/include/qt5/QtGui/QFont \
+		/usr/local/include/qt5/QtGui/qfont.h \
+		/usr/local/include/qt5/QtGui/qtguiglobal.h \
+		/usr/local/include/qt5/QtGui/qtgui-config.h \
+		/usr/local/include/qt5/QtGui/qwindowdefs.h \
+		/usr/local/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/local/include/qt5/QtGui/QColor \
+		/usr/local/include/qt5/QtGui/qcolor.h \
+		/usr/local/include/qt5/QtGui/qrgb.h \
+		/usr/local/include/qt5/QtGui/qrgba64.h \
+		/usr/local/include/qt5/QtGui/QBrush \
+		/usr/local/include/qt5/QtGui/qbrush.h \
+		/usr/local/include/qt5/QtGui/qmatrix.h \
+		/usr/local/include/qt5/QtGui/qpolygon.h \
+		/usr/local/include/qt5/QtGui/qregion.h \
+		/usr/local/include/qt5/QtGui/qtransform.h \
+		/usr/local/include/qt5/QtGui/qimage.h \
+		/usr/local/include/qt5/QtGui/qpaintdevice.h \
+		/usr/local/include/qt5/QtGui/qpixelformat.h \
+		/usr/local/include/qt5/QtGui/qpixmap.h \
+		/usr/local/include/qt5/QtGui/QPixmap \
+		/usr/local/include/qt5/QtGui/QImage \
+		/usr/local/include/qt5/QtGui/QIcon \
+		/usr/local/include/qt5/QtGui/qicon.h \
+		/usr/local/include/qt5/QtTest/qbenchmark.h \
+		/usr/local/include/qt5/QtTest/qbenchmarkmetric.h \
+		/usr/local/include/qt5/QtTest/qsignalspy.h \
+		/usr/local/include/qt5/QtTest/qtesteventloop.h \
+		/usr/local/include/qt5/QtTest/qtest.h \
+		/usr/local/include/qt5/QtTest/qtestcase.h \
+		/usr/local/include/qt5/QtTest/qtestdata.h \
+		/usr/local/include/qt5/QtTest/qtestsystem.h \
+		/usr/local/include/qt5/QtCore/qtestsupport_core.h \
+		/usr/local/include/qt5/QtGui/qtestsupport_gui.h \
+		/usr/local/include/qt5/QtWidgets/qtestsupport_widgets.h \
+		/usr/local/include/qt5/QtWidgets/qtwidgetsglobal.h \
+		/usr/local/include/qt5/QtWidgets/qtwidgets-config.h \
+		/usr/local/include/qt5/QtTest/qtest_network.h \
+		/usr/local/include/qt5/QtNetwork/QHostAddress \
+		/usr/local/include/qt5/QtNetwork/qhostaddress.h \
+		/usr/local/include/qt5/QtNetwork/qtnetworkglobal.h \
+		/usr/local/include/qt5/QtNetwork/qtnetwork-config.h \
+		/usr/local/include/qt5/QtNetwork/qabstractsocket.h \
+		/usr/local/include/qt5/QtNetwork/QNetworkCookie \
+		/usr/local/include/qt5/QtNetwork/qnetworkcookie.h \
+		/usr/local/include/qt5/QtCore/QSharedDataPointer \
+		/usr/local/include/qt5/QtCore/QList \
+		/usr/local/include/qt5/QtCore/QMetaType \
+		/usr/local/include/qt5/QtNetwork/QNetworkReply \
+		/usr/local/include/qt5/QtNetwork/qnetworkreply.h \
+		/usr/local/include/qt5/QtCore/QIODevice \
+		/usr/local/include/qt5/QtCore/QString \
+		/usr/local/include/qt5/QtNetwork/QNetworkRequest \
+		/usr/local/include/qt5/QtNetwork/qnetworkrequest.h \
+		/usr/local/include/qt5/QtCore/QUrl \
+		/usr/local/include/qt5/QtNetwork/QNetworkAccessManager \
+		/usr/local/include/qt5/QtNetwork/qnetworkaccessmanager.h \
+		/usr/local/include/qt5/QtCore/QVector \
+		/usr/local/include/qt5/QtNetwork/QSslConfiguration \
+		/usr/local/include/qt5/QtNetwork/qsslconfiguration.h \
+		/usr/local/include/qt5/QtNetwork/qsslsocket.h \
+		/usr/local/include/qt5/QtNetwork/qtcpsocket.h \
+		/usr/local/include/qt5/QtNetwork/qsslerror.h \
+		/usr/local/include/qt5/QtNetwork/qsslcertificate.h \
+		/usr/local/include/qt5/QtNetwork/qssl.h \
+		/usr/local/include/qt5/QtCore/QFlags \
+		/usr/local/include/qt5/QtNetwork/QSslPreSharedKeyAuthenticator \
+		/usr/local/include/qt5/QtNetwork/qsslpresharedkeyauthenticator.h \
+		/usr/local/include/qt5/QtTest/qtest_widgets.h \
+		/usr/local/include/qt5/QtTest/qtest_gui.h \
+		/usr/local/include/qt5/QtTest/qtestassert.h \
+		/usr/local/include/qt5/QtTest/qtestevent.h \
+		/usr/local/include/qt5/QtTest/qtestkeyboard.h \
+		/usr/local/include/qt5/QtTest/qtestspontaneevent.h \
+		/usr/local/include/qt5/QtGui/qguiapplication.h \
+		/usr/local/include/qt5/QtGui/qinputmethod.h \
+		/usr/local/include/qt5/QtGui/qwindow.h \
+		/usr/local/include/qt5/QtCore/QEvent \
+		/usr/local/include/qt5/QtCore/QMargins \
+		/usr/local/include/qt5/QtCore/QRect \
+		/usr/local/include/qt5/QtGui/qsurface.h \
+		/usr/local/include/qt5/QtGui/qsurfaceformat.h \
+		/usr/local/include/qt5/QtGui/qcursor.h \
+		/usr/local/include/qt5/QtGui/qevent.h \
+		/usr/local/include/qt5/QtGui/qkeysequence.h \
+		/usr/local/include/qt5/QtGui/qvector2d.h \
+		/usr/local/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/qt5/QtWidgets/qwidget.h \
+		/usr/local/include/qt5/QtGui/qpalette.h \
+		/usr/local/include/qt5/QtGui/qfontmetrics.h \
+		/usr/local/include/qt5/QtGui/qfontinfo.h \
+		/usr/local/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/local/include/qt5/QtWidgets/qapplication.h \
+		/usr/local/include/qt5/QtWidgets/qdesktopwidget.h \
+		/usr/local/include/qt5/QtTest/qtestmouse.h \
+		/usr/local/include/qt5/QtCore/QDebug \
+		/usr/local/include/qt5/QtTest/qtesttouch.h \
+		/usr/local/include/qt5/QtGui/qvector3d.h \
+		/usr/local/include/qt5/QtGui/qvector4d.h \
+		/usr/local/include/qt5/QtWidgets/QSizePolicy \
+		/usr/local/include/qt5/QtCore/QMetaEnum \
+		/usr/local/include/qt5/QtTest/qttestversion.h \
+		moc_predefs.h \
+		/usr/local/lib/qt5/bin/moc
+	/usr/local/lib/qt5/bin/moc $(DEFINES) --include /usr/home/iklash/workspace/mere-cache/tests/moc_predefs.h -I/usr/local/lib/qt5/mkspecs/freebsd-clang -I/usr/home/iklash/workspace/mere-cache/tests -I/usr/local/include -I/usr/local/include/qt5 -I/usr/local/include/qt5/QtTest -I/usr/local/include/qt5/QtCore -I/usr/include/c++/v1 -I/usr/lib/clang/11.0.1/include -I/usr/include src/testtlrucache.h -o moc_testtlrucache.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -1760,7 +2091,8 @@ src/main.o: src/main.cpp src/testlrucache.h \
 		/usr/local/include/qt5/QtGui/qvector4d.h \
 		/usr/local/include/qt5/QtWidgets/QSizePolicy \
 		/usr/local/include/qt5/QtCore/QMetaEnum \
-		/usr/local/include/qt5/QtTest/qttestversion.h
+		/usr/local/include/qt5/QtTest/qttestversion.h \
+		src/testtlrucache.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o src/main.o src/main.cpp
 
 src/testlrucache.o: src/testlrucache.cpp src/testlrucache.h \
@@ -2083,11 +2415,343 @@ src/testlrucache.o: src/testlrucache.cpp src/testlrucache.h \
 		/usr/local/include/qt5/QtGui/qvector4d.h \
 		/usr/local/include/qt5/QtWidgets/QSizePolicy \
 		/usr/local/include/qt5/QtCore/QMetaEnum \
-		/usr/local/include/qt5/QtTest/qttestversion.h
+		/usr/local/include/qt5/QtTest/qttestversion.h \
+		/usr/local/include/mere/cache/lrucache.h \
+		/usr/local/include/mere/cache/global.h \
+		/usr/local/include/mere/cache/cache.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o src/testlrucache.o src/testlrucache.cpp
+
+src/testtlrucache.o: src/testtlrucache.cpp src/testtlrucache.h \
+		/usr/local/include/qt5/QtTest/QtTest \
+		/usr/local/include/qt5/QtTest/QtTestDepends \
+		/usr/local/include/qt5/QtCore/QtCore \
+		/usr/local/include/qt5/QtCore/QtCoreDepends \
+		/usr/local/include/qt5/QtCore/qglobal.h \
+		/usr/local/include/qt5/QtCore/qconfig-bootstrapped.h \
+		/usr/local/include/qt5/QtCore/qconfig.h \
+		/usr/local/include/qt5/QtCore/qconfig-modules.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-core.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-network.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-concurrent.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-dbus.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-gui.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-widgets.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-declarative.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-printsupport.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-opengl.h \
+		/usr/local/include/qt5/QtCore/modules/qconfig-multimedia.h \
+		/usr/local/include/qt5/QtCore/qtcore-config.h \
+		/usr/local/include/qt5/QtCore/qsystemdetection.h \
+		/usr/local/include/qt5/QtCore/qprocessordetection.h \
+		/usr/local/include/qt5/QtCore/qcompilerdetection.h \
+		/usr/local/include/qt5/QtCore/qtypeinfo.h \
+		/usr/local/include/qt5/QtCore/qsysinfo.h \
+		/usr/local/include/qt5/QtCore/qlogging.h \
+		/usr/local/include/qt5/QtCore/qflags.h \
+		/usr/local/include/qt5/QtCore/qatomic.h \
+		/usr/local/include/qt5/QtCore/qbasicatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_bootstrap.h \
+		/usr/local/include/qt5/QtCore/qgenericatomic.h \
+		/usr/local/include/qt5/QtCore/qatomic_cxx11.h \
+		/usr/local/include/qt5/QtCore/qatomic_msvc.h \
+		/usr/local/include/qt5/QtCore/qglobalstatic.h \
+		/usr/local/include/qt5/QtCore/qmutex.h \
+		/usr/local/include/qt5/QtCore/qnumeric.h \
+		/usr/local/include/qt5/QtCore/qversiontagging.h \
+		/usr/local/include/qt5/QtCore/qabstractanimation.h \
+		/usr/local/include/qt5/QtCore/qobject.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs.h \
+		/usr/local/include/qt5/QtCore/qnamespace.h \
+		/usr/local/include/qt5/QtCore/qobjectdefs_impl.h \
+		/usr/local/include/qt5/QtCore/qstring.h \
+		/usr/local/include/qt5/QtCore/qchar.h \
+		/usr/local/include/qt5/QtCore/qbytearray.h \
+		/usr/local/include/qt5/QtCore/qrefcount.h \
+		/usr/local/include/qt5/QtCore/qarraydata.h \
+		/usr/local/include/qt5/QtCore/qstringliteral.h \
+		/usr/local/include/qt5/QtCore/qstringalgorithms.h \
+		/usr/local/include/qt5/QtCore/qstringview.h \
+		/usr/local/include/qt5/QtCore/qstringbuilder.h \
+		/usr/local/include/qt5/QtCore/qlist.h \
+		/usr/local/include/qt5/QtCore/qalgorithms.h \
+		/usr/local/include/qt5/QtCore/qiterator.h \
+		/usr/local/include/qt5/QtCore/qhashfunctions.h \
+		/usr/local/include/qt5/QtCore/qpair.h \
+		/usr/local/include/qt5/QtCore/qvector.h \
+		/usr/local/include/qt5/QtCore/qcontainertools_impl.h \
+		/usr/local/include/qt5/QtCore/qpoint.h \
+		/usr/local/include/qt5/QtCore/qbytearraylist.h \
+		/usr/local/include/qt5/QtCore/qstringlist.h \
+		/usr/local/include/qt5/QtCore/qregexp.h \
+		/usr/local/include/qt5/QtCore/qstringmatcher.h \
+		/usr/local/include/qt5/QtCore/qcoreevent.h \
+		/usr/local/include/qt5/QtCore/qscopedpointer.h \
+		/usr/local/include/qt5/QtCore/qmetatype.h \
+		/usr/local/include/qt5/QtCore/qvarlengtharray.h \
+		/usr/local/include/qt5/QtCore/qcontainerfwd.h \
+		/usr/local/include/qt5/QtCore/qobject_impl.h \
+		/usr/local/include/qt5/QtCore/qabstracteventdispatcher.h \
+		/usr/local/include/qt5/QtCore/qeventloop.h \
+		/usr/local/include/qt5/QtCore/qabstractitemmodel.h \
+		/usr/local/include/qt5/QtCore/qvariant.h \
+		/usr/local/include/qt5/QtCore/qmap.h \
+		/usr/local/include/qt5/QtCore/qdebug.h \
+		/usr/local/include/qt5/QtCore/qhash.h \
+		/usr/local/include/qt5/QtCore/qtextstream.h \
+		/usr/local/include/qt5/QtCore/qiodevice.h \
+		/usr/local/include/qt5/QtCore/qlocale.h \
+		/usr/local/include/qt5/QtCore/qshareddata.h \
+		/usr/local/include/qt5/QtCore/qset.h \
+		/usr/local/include/qt5/QtCore/qcontiguouscache.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer.h \
+		/usr/local/include/qt5/QtCore/qsharedpointer_impl.h \
+		/usr/local/include/qt5/QtCore/qabstractnativeeventfilter.h \
+		/usr/local/include/qt5/QtCore/qabstractproxymodel.h \
+		/usr/local/include/qt5/QtCore/qabstractstate.h \
+		/usr/local/include/qt5/QtCore/qabstracttransition.h \
+		/usr/local/include/qt5/QtCore/qanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qarraydataops.h \
+		/usr/local/include/qt5/QtCore/qarraydatapointer.h \
+		/usr/local/include/qt5/QtCore/qbasictimer.h \
+		/usr/local/include/qt5/QtCore/qbitarray.h \
+		/usr/local/include/qt5/QtCore/qbuffer.h \
+		/usr/local/include/qt5/QtCore/qbytearraymatcher.h \
+		/usr/local/include/qt5/QtCore/qcache.h \
+		/usr/local/include/qt5/QtCore/qcalendar.h \
+		/usr/local/include/qt5/QtCore/qcborarray.h \
+		/usr/local/include/qt5/QtCore/qcborvalue.h \
+		/usr/local/include/qt5/QtCore/qdatetime.h \
+		/usr/local/include/qt5/QtCore/qcborcommon.h \
+		/usr/local/include/qt5/QtCore/qregularexpression.h \
+		/usr/local/include/qt5/QtCore/qurl.h \
+		/usr/local/include/qt5/QtCore/qurlquery.h \
+		/usr/local/include/qt5/QtCore/quuid.h \
+		/usr/local/include/qt5/QtCore/qcbormap.h \
+		/usr/local/include/qt5/QtCore/qcborstream.h \
+		/usr/local/include/qt5/QtCore/qcborstreamreader.h \
+		/usr/local/include/qt5/QtCore/qfloat16.h \
+		/usr/local/include/qt5/QtCore/qcborstreamwriter.h \
+		/usr/local/include/qt5/QtCore/qcollator.h \
+		/usr/local/include/qt5/QtCore/qcommandlineoption.h \
+		/usr/local/include/qt5/QtCore/qcommandlineparser.h \
+		/usr/local/include/qt5/QtCore/qcoreapplication.h \
+		/usr/local/include/qt5/QtCore/qconcatenatetablesproxymodel.h \
+		/usr/local/include/qt5/QtCore/qcryptographichash.h \
+		/usr/local/include/qt5/QtCore/qdatastream.h \
+		/usr/local/include/qt5/QtCore/qdeadlinetimer.h \
+		/usr/local/include/qt5/QtCore/qelapsedtimer.h \
+		/usr/local/include/qt5/QtCore/qdir.h \
+		/usr/local/include/qt5/QtCore/qfileinfo.h \
+		/usr/local/include/qt5/QtCore/qfile.h \
+		/usr/local/include/qt5/QtCore/qfiledevice.h \
+		/usr/local/include/qt5/QtCore/qdiriterator.h \
+		/usr/local/include/qt5/QtCore/qeasingcurve.h \
+		/usr/local/include/qt5/QtCore/qendian.h \
+		/usr/local/include/qt5/QtCore/qeventtransition.h \
+		/usr/local/include/qt5/QtCore/qexception.h \
+		/usr/local/include/qt5/QtCore/qfactoryinterface.h \
+		/usr/local/include/qt5/QtCore/qfileselector.h \
+		/usr/local/include/qt5/QtCore/QObject \
+		/usr/local/include/qt5/QtCore/QStringList \
+		/usr/local/include/qt5/QtCore/qfilesystemwatcher.h \
+		/usr/local/include/qt5/QtCore/qfinalstate.h \
+		/usr/local/include/qt5/QtCore/qfuture.h \
+		/usr/local/include/qt5/QtCore/qfutureinterface.h \
+		/usr/local/include/qt5/QtCore/qrunnable.h \
+		/usr/local/include/qt5/QtCore/qresultstore.h \
+		/usr/local/include/qt5/QtCore/qfuturesynchronizer.h \
+		/usr/local/include/qt5/QtCore/qfuturewatcher.h \
+		/usr/local/include/qt5/QtCore/qhistorystate.h \
+		/usr/local/include/qt5/QtCore/qidentityproxymodel.h \
+		/usr/local/include/qt5/QtCore/qisenum.h \
+		/usr/local/include/qt5/QtCore/qitemselectionmodel.h \
+		/usr/local/include/qt5/QtCore/qjsonarray.h \
+		/usr/local/include/qt5/QtCore/qjsonvalue.h \
+		/usr/local/include/qt5/QtCore/qjsondocument.h \
+		/usr/local/include/qt5/QtCore/qjsonobject.h \
+		/usr/local/include/qt5/QtCore/qlibrary.h \
+		/usr/local/include/qt5/QtCore/qlibraryinfo.h \
+		/usr/local/include/qt5/QtCore/qversionnumber.h \
+		/usr/local/include/qt5/QtCore/qline.h \
+		/usr/local/include/qt5/QtCore/qlinkedlist.h \
+		/usr/local/include/qt5/QtCore/qlockfile.h \
+		/usr/local/include/qt5/QtCore/qloggingcategory.h \
+		/usr/local/include/qt5/QtCore/qmargins.h \
+		/usr/local/include/qt5/QtCore/qmath.h \
+		/usr/local/include/qt5/QtCore/qmessageauthenticationcode.h \
+		/usr/local/include/qt5/QtCore/qmetaobject.h \
+		/usr/local/include/qt5/QtCore/qmimedata.h \
+		/usr/local/include/qt5/QtCore/qmimedatabase.h \
+		/usr/local/include/qt5/QtCore/qmimetype.h \
+		/usr/local/include/qt5/QtCore/qobjectcleanuphandler.h \
+		/usr/local/include/qt5/QtCore/qoperatingsystemversion.h \
+		/usr/local/include/qt5/QtCore/qparallelanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qpauseanimation.h \
+		/usr/local/include/qt5/QtCore/qplugin.h \
+		/usr/local/include/qt5/QtCore/qpointer.h \
+		/usr/local/include/qt5/QtCore/qpluginloader.h \
+		/usr/local/include/qt5/QtCore/qprocess.h \
+		/usr/local/include/qt5/QtCore/qpropertyanimation.h \
+		/usr/local/include/qt5/QtCore/qvariantanimation.h \
+		/usr/local/include/qt5/QtCore/qqueue.h \
+		/usr/local/include/qt5/QtCore/qrandom.h \
+		/usr/local/include/qt5/QtCore/qreadwritelock.h \
+		/usr/local/include/qt5/QtCore/qrect.h \
+		/usr/local/include/qt5/QtCore/qsize.h \
+		/usr/local/include/qt5/QtCore/qresource.h \
+		/usr/local/include/qt5/QtCore/qsavefile.h \
+		/usr/local/include/qt5/QtCore/qscopedvaluerollback.h \
+		/usr/local/include/qt5/QtCore/qscopeguard.h \
+		/usr/local/include/qt5/QtCore/qsemaphore.h \
+		/usr/local/include/qt5/QtCore/qsequentialanimationgroup.h \
+		/usr/local/include/qt5/QtCore/qsettings.h \
+		/usr/local/include/qt5/QtCore/qsharedmemory.h \
+		/usr/local/include/qt5/QtCore/qsignalmapper.h \
+		/usr/local/include/qt5/QtCore/qsignaltransition.h \
+		/usr/local/include/qt5/QtCore/qsocketnotifier.h \
+		/usr/local/include/qt5/QtCore/qsortfilterproxymodel.h \
+		/usr/local/include/qt5/QtCore/qstack.h \
+		/usr/local/include/qt5/QtCore/qstandardpaths.h \
+		/usr/local/include/qt5/QtCore/qstate.h \
+		/usr/local/include/qt5/QtCore/qstatemachine.h \
+		/usr/local/include/qt5/QtCore/qstorageinfo.h \
+		/usr/local/include/qt5/QtCore/qstringlistmodel.h \
+		/usr/local/include/qt5/QtCore/qsystemsemaphore.h \
+		/usr/local/include/qt5/QtCore/qtemporarydir.h \
+		/usr/local/include/qt5/QtCore/qtemporaryfile.h \
+		/usr/local/include/qt5/QtCore/qtextboundaryfinder.h \
+		/usr/local/include/qt5/QtCore/qtextcodec.h \
+		/usr/local/include/qt5/QtCore/qthread.h \
+		/usr/local/include/qt5/QtCore/qthreadpool.h \
+		/usr/local/include/qt5/QtCore/qthreadstorage.h \
+		/usr/local/include/qt5/QtCore/qtimeline.h \
+		/usr/local/include/qt5/QtCore/qtimer.h \
+		/usr/local/include/qt5/QtCore/qtimezone.h \
+		/usr/local/include/qt5/QtCore/qtranslator.h \
+		/usr/local/include/qt5/QtCore/qtransposeproxymodel.h \
+		/usr/local/include/qt5/QtCore/qtypetraits.h \
+		/usr/local/include/qt5/QtCore/qwaitcondition.h \
+		/usr/local/include/qt5/QtCore/QDeadlineTimer \
+		/usr/local/include/qt5/QtCore/qwineventnotifier.h \
+		/usr/local/include/qt5/QtCore/qxmlstream.h \
+		/usr/local/include/qt5/QtCore/qtcoreversion.h \
+		/usr/local/include/qt5/QtTest/qttestglobal.h \
+		/usr/local/include/qt5/QtTest/qttestlib-config.h \
+		/usr/local/include/qt5/QtTest/qabstractitemmodeltester.h \
+		/usr/local/include/qt5/QtCore/QAbstractItemModel \
+		/usr/local/include/qt5/QtCore/QVariant \
+		/usr/local/include/qt5/QtGui/QFont \
+		/usr/local/include/qt5/QtGui/qfont.h \
+		/usr/local/include/qt5/QtGui/qtguiglobal.h \
+		/usr/local/include/qt5/QtGui/qtgui-config.h \
+		/usr/local/include/qt5/QtGui/qwindowdefs.h \
+		/usr/local/include/qt5/QtGui/qwindowdefs_win.h \
+		/usr/local/include/qt5/QtGui/QColor \
+		/usr/local/include/qt5/QtGui/qcolor.h \
+		/usr/local/include/qt5/QtGui/qrgb.h \
+		/usr/local/include/qt5/QtGui/qrgba64.h \
+		/usr/local/include/qt5/QtGui/QBrush \
+		/usr/local/include/qt5/QtGui/qbrush.h \
+		/usr/local/include/qt5/QtGui/qmatrix.h \
+		/usr/local/include/qt5/QtGui/qpolygon.h \
+		/usr/local/include/qt5/QtGui/qregion.h \
+		/usr/local/include/qt5/QtGui/qtransform.h \
+		/usr/local/include/qt5/QtGui/qimage.h \
+		/usr/local/include/qt5/QtGui/qpaintdevice.h \
+		/usr/local/include/qt5/QtGui/qpixelformat.h \
+		/usr/local/include/qt5/QtGui/qpixmap.h \
+		/usr/local/include/qt5/QtGui/QPixmap \
+		/usr/local/include/qt5/QtGui/QImage \
+		/usr/local/include/qt5/QtGui/QIcon \
+		/usr/local/include/qt5/QtGui/qicon.h \
+		/usr/local/include/qt5/QtTest/qbenchmark.h \
+		/usr/local/include/qt5/QtTest/qbenchmarkmetric.h \
+		/usr/local/include/qt5/QtTest/qsignalspy.h \
+		/usr/local/include/qt5/QtTest/qtesteventloop.h \
+		/usr/local/include/qt5/QtTest/qtest.h \
+		/usr/local/include/qt5/QtTest/qtestcase.h \
+		/usr/local/include/qt5/QtTest/qtestdata.h \
+		/usr/local/include/qt5/QtTest/qtestsystem.h \
+		/usr/local/include/qt5/QtCore/qtestsupport_core.h \
+		/usr/local/include/qt5/QtGui/qtestsupport_gui.h \
+		/usr/local/include/qt5/QtWidgets/qtestsupport_widgets.h \
+		/usr/local/include/qt5/QtWidgets/qtwidgetsglobal.h \
+		/usr/local/include/qt5/QtWidgets/qtwidgets-config.h \
+		/usr/local/include/qt5/QtTest/qtest_network.h \
+		/usr/local/include/qt5/QtNetwork/QHostAddress \
+		/usr/local/include/qt5/QtNetwork/qhostaddress.h \
+		/usr/local/include/qt5/QtNetwork/qtnetworkglobal.h \
+		/usr/local/include/qt5/QtNetwork/qtnetwork-config.h \
+		/usr/local/include/qt5/QtNetwork/qabstractsocket.h \
+		/usr/local/include/qt5/QtNetwork/QNetworkCookie \
+		/usr/local/include/qt5/QtNetwork/qnetworkcookie.h \
+		/usr/local/include/qt5/QtCore/QSharedDataPointer \
+		/usr/local/include/qt5/QtCore/QList \
+		/usr/local/include/qt5/QtCore/QMetaType \
+		/usr/local/include/qt5/QtNetwork/QNetworkReply \
+		/usr/local/include/qt5/QtNetwork/qnetworkreply.h \
+		/usr/local/include/qt5/QtCore/QIODevice \
+		/usr/local/include/qt5/QtCore/QString \
+		/usr/local/include/qt5/QtNetwork/QNetworkRequest \
+		/usr/local/include/qt5/QtNetwork/qnetworkrequest.h \
+		/usr/local/include/qt5/QtCore/QUrl \
+		/usr/local/include/qt5/QtNetwork/QNetworkAccessManager \
+		/usr/local/include/qt5/QtNetwork/qnetworkaccessmanager.h \
+		/usr/local/include/qt5/QtCore/QVector \
+		/usr/local/include/qt5/QtNetwork/QSslConfiguration \
+		/usr/local/include/qt5/QtNetwork/qsslconfiguration.h \
+		/usr/local/include/qt5/QtNetwork/qsslsocket.h \
+		/usr/local/include/qt5/QtNetwork/qtcpsocket.h \
+		/usr/local/include/qt5/QtNetwork/qsslerror.h \
+		/usr/local/include/qt5/QtNetwork/qsslcertificate.h \
+		/usr/local/include/qt5/QtNetwork/qssl.h \
+		/usr/local/include/qt5/QtCore/QFlags \
+		/usr/local/include/qt5/QtNetwork/QSslPreSharedKeyAuthenticator \
+		/usr/local/include/qt5/QtNetwork/qsslpresharedkeyauthenticator.h \
+		/usr/local/include/qt5/QtTest/qtest_widgets.h \
+		/usr/local/include/qt5/QtTest/qtest_gui.h \
+		/usr/local/include/qt5/QtTest/qtestassert.h \
+		/usr/local/include/qt5/QtTest/qtestevent.h \
+		/usr/local/include/qt5/QtTest/qtestkeyboard.h \
+		/usr/local/include/qt5/QtTest/qtestspontaneevent.h \
+		/usr/local/include/qt5/QtGui/qguiapplication.h \
+		/usr/local/include/qt5/QtGui/qinputmethod.h \
+		/usr/local/include/qt5/QtGui/qwindow.h \
+		/usr/local/include/qt5/QtCore/QEvent \
+		/usr/local/include/qt5/QtCore/QMargins \
+		/usr/local/include/qt5/QtCore/QRect \
+		/usr/local/include/qt5/QtGui/qsurface.h \
+		/usr/local/include/qt5/QtGui/qsurfaceformat.h \
+		/usr/local/include/qt5/QtGui/qcursor.h \
+		/usr/local/include/qt5/QtGui/qevent.h \
+		/usr/local/include/qt5/QtGui/qkeysequence.h \
+		/usr/local/include/qt5/QtGui/qvector2d.h \
+		/usr/local/include/qt5/QtGui/qtouchdevice.h \
+		/usr/local/include/qt5/QtWidgets/qwidget.h \
+		/usr/local/include/qt5/QtGui/qpalette.h \
+		/usr/local/include/qt5/QtGui/qfontmetrics.h \
+		/usr/local/include/qt5/QtGui/qfontinfo.h \
+		/usr/local/include/qt5/QtWidgets/qsizepolicy.h \
+		/usr/local/include/qt5/QtWidgets/qapplication.h \
+		/usr/local/include/qt5/QtWidgets/qdesktopwidget.h \
+		/usr/local/include/qt5/QtTest/qtestmouse.h \
+		/usr/local/include/qt5/QtCore/QDebug \
+		/usr/local/include/qt5/QtTest/qtesttouch.h \
+		/usr/local/include/qt5/QtGui/qvector3d.h \
+		/usr/local/include/qt5/QtGui/qvector4d.h \
+		/usr/local/include/qt5/QtWidgets/QSizePolicy \
+		/usr/local/include/qt5/QtCore/QMetaEnum \
+		/usr/local/include/qt5/QtTest/qttestversion.h \
+		/usr/local/include/mere/cache/tlrucache.h \
+		/usr/local/include/mere/cache/global.h \
+		/usr/local/include/mere/cache/cache.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o src/testtlrucache.o src/testtlrucache.cpp
 
 moc_testlrucache.o: moc_testlrucache.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_testlrucache.o moc_testlrucache.cpp
+
+moc_testtlrucache.o: moc_testtlrucache.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_testtlrucache.o moc_testtlrucache.cpp
 
 ####### Install
 

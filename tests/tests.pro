@@ -10,10 +10,12 @@ TEMPLATE = app
 
 SOURCES += \
     src/main.cpp \
-    src/testlrucache.cpp
+    src/testlrucache.cpp \
+    src/testtlrucache.cpp
 
 HEADERS += \
-    src/testlrucache.h
+    src/testlrucache.h \
+    src/testtlrucache.h
 
 #include(../mere-xdg-src.pri)
 

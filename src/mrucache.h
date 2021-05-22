@@ -1,5 +1,5 @@
-#ifndef MERE_CACHE_LRUCACHE_H
-#define MERE_CACHE_LRUCACHE_H
+#ifndef MERE_CACHE_MRUCACHE_H
+#define MERE_CACHE_MRUCACHE_H
 
 #include "global.h"
 #include "cache.h"
@@ -12,17 +12,14 @@ namespace Mere
 namespace Cache
 {
 
-typedef std::string Key;
-typedef std::string Value;
-
-typedef std::pair<Key, Value> Pair;
+typedef std::pair<std::string, std::string> Pair;
 typedef std::list<Pair>::iterator PairIterator;
 
-class MERE_CACHE_LIB_SPEC LRUCache : public Mere::Cache::Cache
+class MERE_CACHE_LIB_SPEC MRUCache : public Mere::Cache::Cache
 {
 public:
-    ~LRUCache();
-    explicit LRUCache(int capacity);
+    ~MRUCache();
+    explicit MRUCache(int capacity);
 
     bool has(const std::string &key) override;
     std::string get(const std::string &key, bool *flag = nullptr) override;
@@ -35,10 +32,11 @@ private:
     int m_capacity;
 
     std::list<Pair> m_pairs;
-    std::unordered_map<Key, PairIterator> m_cache;
+    std::unordered_map<std::string, PairIterator> m_cache;
+
 };
 
 }
 }
 
-#endif // MERE_CACHE_LRUCACHE_H
+#endif // MERE_CACHE_MRUCACHE_H
