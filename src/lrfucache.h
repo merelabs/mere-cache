@@ -5,8 +5,6 @@ namespace Mere
 {
 namespace Cache
 {
-namespace Policy
-{
 
 class LRFUCache
 {
@@ -14,7 +12,6 @@ public:
     LRFUCache();
 };
 
-}
 }
 }
 

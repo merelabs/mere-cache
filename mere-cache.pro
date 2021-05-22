@@ -12,43 +12,33 @@ DEFINES += LIB_VERSION=\\\"$$VERSION\\\"
 DEFINES += MERE_XDG_LIB
 
 SOURCES += \
-    src/linkcache.cpp \
-    src/policy/arccache.cpp \
     src/cache.cpp \
-    src/diskcache.cpp \
-    src/policy/fifocache.cpp \
-    src/policy/lfucache.cpp \
-    src/policy/lifocache.cpp \
-    src/policy/lrfucache.cpp \
-    src/policy/lrucache.cpp \
-    src/policy/mfucache.cpp \
-    src/policy/mrucache.cpp \
-    src/softlinkcache.cpp \
-    src/policy/tlrucache.cpp
+    src/arccache.cpp \
+    src/fifocache.cpp \
+    src/lfucache.cpp \
+    src/lifocache.cpp \
+    src/lrfucache.cpp \
+    src/lrucache.cpp \
+    src/mfucache.cpp \
+    src/mrucache.cpp \
+    src/tlrucache.cpp
 
 HEADERS += \
-    src/linkcache.h \
-    src/policy/arccache.h \
     src/cache.h \
-    src/diskcache.h \
-    src/policy/fifocache.h \
+    src/arccache.h \
+    src/fifocache.h \
     src/global.h \
-    src/policy/lfucache.h \
-    src/policy/lifocache.h \
-    src/policy/lrfucache.h \
-    src/policy/lrucache.h \
-    src/policy/mfucache.h \
-    src/policy/mrucache.h \
-    src/softlinkcache.h \
-    src/policy/tlrucache.h
+    src/lfucache.h \
+    src/lifocache.h \
+    src/lrfucache.h \
+    src/lrucache.h \
+    src/mfucache.h \
+    src/mrucache.h \
+    src/tlrucache.h
 
-#DISTFILES +=
 
 INCLUDEPATH += /usr/local/include
-
 LIBS += -L/usr/local/lib
-
-LIBS += -lmere-utils
 
 #
 # Install

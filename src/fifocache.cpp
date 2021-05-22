@@ -1,25 +1,24 @@
-#include "lifocache.h"
+#include "fifocache.h"
 
 #include <iostream>
-#include <algorithm>
 
-Mere::Cache::Policy::LIFOCache::~LIFOCache()
+Mere::Cache::FIFOCache::~FIFOCache()
 {
 }
 
-Mere::Cache::Policy::LIFOCache::LIFOCache(int capacity)
+Mere::Cache::FIFOCache::FIFOCache(int capacity)
     : m_capacity(capacity)
 {
 }
 
-bool Mere::Cache::Policy::LIFOCache::has(const std::string &key)
+bool Mere::Cache::FIFOCache::has(const std::string &key)
 {
     if (key.empty()) return false;
 
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::Policy::LIFOCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::FIFOCache::get(const std::string &key, bool *flag)
 {
     if (key.empty())
     {
@@ -38,7 +37,7 @@ std::string Mere::Cache::Policy::LIFOCache::get(const std::string &key, bool *fl
     return it->second;
 }
 
-void Mere::Cache::Policy::LIFOCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::FIFOCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     if (key.empty())
     {
@@ -60,19 +59,19 @@ void Mere::Cache::Policy::LIFOCache::set(const std::string &key, const std::stri
     else
     {
         if (flag) *flag = true;
-
-        if (flag) *flag = true;
         m_cache.insert({key, value});
+
+        // do we need to change the position in queue?
     }
 }
 
-void Mere::Cache::Policy::LIFOCache::evict()
+void Mere::Cache::FIFOCache::evict()
 {
-    m_cache.erase(m_pairs.top());
+    m_cache.erase(m_pairs.front());
     m_pairs.pop();
 }
 
-void Mere::Cache::Policy::LIFOCache::print()
+void Mere::Cache::FIFOCache::print()
 {
     for (auto& cache : m_cache)
         std::cout << cache.first << "\t => " << cache.second << std::endl;

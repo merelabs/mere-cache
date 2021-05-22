@@ -1,8 +1,8 @@
 #ifndef MERE_CACHE_LFUCACHE_H
 #define MERE_CACHE_LFUCACHE_H
 
-#include "../global.h"
-#include "../cache.h"
+#include "global.h"
+#include "cache.h"
 
 #include <map>
 #include <unordered_map>
@@ -10,8 +10,6 @@
 namespace Mere
 {
 namespace Cache
-{
-namespace Policy
 {
 
 typedef std::string Key;
@@ -39,7 +37,6 @@ private:
     std::multimap<Freequency, Key> m_frequency;
     std::unordered_map<Key, std::pair<Value, FreequencyIterator> > m_cache;
 };
-}
 }
 }
 #endif // MERE_CACHE_LFUCACHE_H

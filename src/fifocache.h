@@ -1,8 +1,8 @@
 #ifndef MERE_CACHE_FIFOCACHE_H
 #define MERE_CACHE_FIFOCACHE_H
 
-#include "../global.h"
-#include "../cache.h"
+#include "global.h"
+#include "cache.h"
 
 #include <queue>
 #include <unordered_map>
@@ -11,8 +11,7 @@ namespace Mere
 {
 namespace Cache
 {
-namespace Policy
-{
+
 typedef std::string Key;
 typedef std::string Value;
 
@@ -38,7 +37,6 @@ private:
     std::unordered_map<Key, Value> m_cache;
 };
 
-}
 }
 }
 

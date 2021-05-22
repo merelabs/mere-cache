@@ -1,24 +1,24 @@
 #include "mrucache.h"
 
-Mere::Cache::Policy::MRUCache::~MRUCache()
+Mere::Cache::MRUCache::~MRUCache()
 {
 
 }
 
-Mere::Cache::Policy::MRUCache::MRUCache(int capacity)
+Mere::Cache::MRUCache::MRUCache(int capacity)
     : m_capacity(capacity)
 {
 
 }
 
-bool Mere::Cache::Policy::MRUCache::has(const std::string &key)
+bool Mere::Cache::MRUCache::has(const std::string &key)
 {
     if (key.empty()) return false;
 
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::Policy::MRUCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::MRUCache::get(const std::string &key, bool *flag)
 {
     if (key.empty())
     {
@@ -41,7 +41,7 @@ std::string Mere::Cache::Policy::MRUCache::get(const std::string &key, bool *fla
     return it->second->second;
 }
 
-void Mere::Cache::Policy::MRUCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::MRUCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     if (key.empty())
     {
@@ -69,7 +69,7 @@ void Mere::Cache::Policy::MRUCache::set(const std::string &key, const std::strin
     m_cache.insert({key, m_pairs.begin()});
 }
 
-void Mere::Cache::Policy::MRUCache::evict()
+void Mere::Cache::MRUCache::evict()
 {
     m_cache.erase(m_pairs.back().first);
     m_pairs.pop_back();

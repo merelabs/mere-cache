@@ -3,23 +3,23 @@
 #include <algorithm>
 #include <utility>
 
-Mere::Cache::Policy::LRUCache::~LRUCache()
+Mere::Cache::LRUCache::~LRUCache()
 {
 }
 
-Mere::Cache::Policy::LRUCache::LRUCache(int capacity)
+Mere::Cache::LRUCache::LRUCache(int capacity)
     : m_capacity(capacity)
 {
 }
 
-bool Mere::Cache::Policy::LRUCache::has(const std::string &key)
+bool Mere::Cache::LRUCache::has(const std::string &key)
 {
     if (key.empty()) return false;
 
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::Policy::LRUCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::LRUCache::get(const std::string &key, bool *flag)
 {
     if (key.empty())
     {
@@ -42,7 +42,7 @@ std::string Mere::Cache::Policy::LRUCache::get(const std::string &key, bool *fla
     return it->second->second;
 }
 
-void Mere::Cache::Policy::LRUCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     if (key.empty())
     {
@@ -70,13 +70,13 @@ void Mere::Cache::Policy::LRUCache::set(const std::string &key, const std::strin
     m_cache.insert({key, std::prev(m_pairs.end())});
 }
 
-void Mere::Cache::Policy::LRUCache::evict()
+void Mere::Cache::LRUCache::evict()
 {
     m_cache.erase(m_pairs.front().first);
     m_pairs.pop_front();
 }
 
-void Mere::Cache::Policy::LRUCache::print()
+void Mere::Cache::LRUCache::print()
 {
     for (auto& cache : m_cache)
         std::cout << cache.first << "\t => " << cache.second->second << std::endl;

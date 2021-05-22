@@ -4,29 +4,29 @@
 #include <algorithm>
 
 
-Mere::Cache::Policy::TLRUCache::~TLRUCache()
+Mere::Cache::TLRUCache::~TLRUCache()
 {
 
 }
 
-Mere::Cache::Policy::TLRUCache::TLRUCache(int capacity)
+Mere::Cache::TLRUCache::TLRUCache(int capacity)
     : Mere::Cache::Cache(),
       m_capacity(capacity),
       m_age(60)
 {
 }
 
-void Mere::Cache::Policy::TLRUCache::age(const Age &age)
+void Mere::Cache::TLRUCache::age(const Age &age)
 {
     m_age = age;
 }
 
-Mere::Cache::Policy::Age Mere::Cache::Policy::TLRUCache::age() const
+Mere::Cache::Age Mere::Cache::TLRUCache::age() const
 {
     return m_age;
 }
 
-bool Mere::Cache::Policy::TLRUCache::has(const std::string &key)
+bool Mere::Cache::TLRUCache::has(const std::string &key)
 {
     if (key.empty()) return false;
 
@@ -45,7 +45,7 @@ bool Mere::Cache::Policy::TLRUCache::has(const std::string &key)
     return true;
 }
 
-std::string Mere::Cache::Policy::TLRUCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::TLRUCache::get(const std::string &key, bool *flag)
 {
     if (key.empty())
     {
@@ -79,7 +79,7 @@ std::string Mere::Cache::Policy::TLRUCache::get(const std::string &key, bool *fl
     return it->second.second->second;
 }
 
-void Mere::Cache::Policy::TLRUCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::TLRUCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     if (key.empty())
     {
@@ -107,13 +107,13 @@ void Mere::Cache::Policy::TLRUCache::set(const std::string &key, const std::stri
     m_cache.insert({key, {std::chrono::high_resolution_clock::now(), std::prev(m_pairs.end())}});
 }
 
-void Mere::Cache::Policy::TLRUCache::evict()
+void Mere::Cache::TLRUCache::evict()
 {
     m_cache.erase(m_pairs.front().first);
     m_pairs.pop_front();
 }
 
-void Mere::Cache::Policy::TLRUCache::print()
+void Mere::Cache::TLRUCache::print()
 {
     for (auto& cache : m_cache)
         std::cout << cache.first << "\t => " << cache.second.second->second << std::endl;

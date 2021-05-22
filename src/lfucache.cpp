@@ -1,22 +1,22 @@
 #include "lfucache.h"
 
-Mere::Cache::Policy::LFUCache::~LFUCache()
+Mere::Cache::LFUCache::~LFUCache()
 {
 }
 
-Mere::Cache::Policy::LFUCache::LFUCache(int capacity)
+Mere::Cache::LFUCache::LFUCache(int capacity)
     : m_capacity(capacity)
 {
 }
 
-bool Mere::Cache::Policy::LFUCache::has(const std::string &key)
+bool Mere::Cache::LFUCache::has(const std::string &key)
 {
     if (key.empty()) return false;
 
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::Policy::LFUCache::get(const std::string &key, bool *flag)
+std::string Mere::Cache::LFUCache::get(const std::string &key, bool *flag)
 {
     if (key.empty())
     {
@@ -40,7 +40,7 @@ std::string Mere::Cache::Policy::LFUCache::get(const std::string &key, bool *fla
     return it->second.first;
 }
 
-void Mere::Cache::Policy::LFUCache::set(const std::string &key, const std::string &value, bool *flag)
+void Mere::Cache::LFUCache::set(const std::string &key, const std::string &value, bool *flag)
 {
     if (key.empty())
     {
@@ -66,7 +66,7 @@ void Mere::Cache::Policy::LFUCache::set(const std::string &key, const std::strin
     }
 }
 
-void Mere::Cache::Policy::LFUCache::evict()
+void Mere::Cache::LFUCache::evict()
 {
     auto fit = m_frequency.begin();
     m_cache.erase(fit->second);

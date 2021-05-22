@@ -5,8 +5,6 @@ namespace Mere
 {
 namespace Cache
 {
-namespace Policy
-{
 
 class MFUCache
 {
@@ -17,7 +15,6 @@ private:
     int m_capacity;
 };
 
-}
 }
 }
 
