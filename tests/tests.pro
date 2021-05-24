@@ -11,11 +11,13 @@ TEMPLATE = app
 SOURCES += \
     src/main.cpp \
     src/testfifocache.cpp \
+    src/testlifocache.cpp \
     src/testlrucache.cpp \
     src/testtlrucache.cpp
 
 HEADERS += \
     src/testfifocache.h \
+    src/testlifocache.h \
     src/testlrucache.h \
     src/testtlrucache.h
 
