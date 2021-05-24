@@ -16,7 +16,7 @@ typedef std::string Key;
 typedef std::string Value;
 typedef unsigned int Freequency;
 
-typedef  std::multimap<Freequency, Key>::iterator  FreequencyIterator;
+typedef std::multimap<Freequency, Key>::iterator  FreequencyIterator;
 
 class MERE_CACHE_LIB_SPEC LFUCache : public Mere::Cache::Cache
 {

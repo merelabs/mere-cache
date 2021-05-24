@@ -1,4 +1,3 @@
-#QT      = core
 CONFIG += c++11
 CONFIG += shared
 
@@ -17,6 +16,7 @@ SOURCES += \
     src/fifocache.cpp \
     src/lfucache.cpp \
     src/lifocache.cpp \
+    src/lirscache.cpp \
     src/lrfucache.cpp \
     src/lrucache.cpp \
     src/mfucache.cpp \
@@ -30,6 +30,7 @@ HEADERS += \
     src/global.h \
     src/lfucache.h \
     src/lifocache.h \
+    src/lirscache.h \
     src/lrfucache.h \
     src/lrucache.h \
     src/mfucache.h \

@@ -72,6 +72,9 @@ void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value
 
 void Mere::Cache::LRUCache::evict()
 {
+    if (m_cache.empty()) return;
+    if (m_pairs.empty()) return;
+
     m_cache.erase(m_pairs.front().first);
     m_pairs.pop_front();
 }
