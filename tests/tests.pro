@@ -10,10 +10,12 @@ TEMPLATE = app
 
 SOURCES += \
     src/main.cpp \
+    src/testfifocache.cpp \
     src/testlrucache.cpp \
     src/testtlrucache.cpp
 
 HEADERS += \
+    src/testfifocache.h \
     src/testlrucache.h \
     src/testtlrucache.h
 

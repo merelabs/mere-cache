@@ -1,13 +1,13 @@
-#ifndef TESTLRUCACHE_H
-#define TESTLRUCACHE_H
+#ifndef TESTFIFOCACHE_H
+#define TESTFIFOCACHE_H
 
 #include <QtTest>
 
-class TestLRUCache : public QObject
+class TestFIFOCache : public QObject
 {
     Q_OBJECT
 public:
-    TestLRUCache(){};
+    TestFIFOCache(){};
 
 private slots:
     void initTestCase();
@@ -16,4 +16,4 @@ private slots:
     void testevict();
 };
 
-#endif // TESTLRUCACHE_H
+#endif // TESTFIFOCACHE_H
