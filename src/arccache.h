@@ -18,12 +18,8 @@ typedef std::string Key;
 typedef std::string Value;
 typedef std::size_t Freequency;
 
-typedef std::pair<Key, Value> Pair;
-typedef std::list<Pair>::iterator PairIterator;
-
-typedef std::multimap<Freequency, Key>::iterator  FreequencyIterator;
-typedef std::list<FreequencyIterator>::iterator ListIterator;
 typedef std::multimap<Key, Freequency>::iterator GhostIterator;
+typedef std::multimap<Freequency, Key>::iterator FreequencyIterator;
 
 class MERE_CACHE_LIB_SPEC ARCCache : public Mere::Cache::Cache
 {
@@ -39,18 +35,16 @@ public:
     void print();
 
 private:
-    void evictLRUHistory();
-    void evictLFUHistory();
-
     void evictLRU();
     void evictLFU();
+
+    void evictLRUHistory();
+    void evictLFUHistory();
 
     void adaptLRU();
     void adaptLFU();
 
 private:
-    std::size_t m_capacity;
-
     std::size_t m_lrusize;
     std::size_t m_lrughostsize;
 

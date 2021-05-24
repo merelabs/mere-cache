@@ -2,11 +2,10 @@
 
 Mere::Cache::MRUCache::~MRUCache()
 {
-
 }
 
-Mere::Cache::MRUCache::MRUCache(int capacity)
-    : m_capacity(capacity)
+Mere::Cache::MRUCache::MRUCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity)
 {
 
 }
@@ -54,7 +53,7 @@ void Mere::Cache::MRUCache::set(const std::string &key, const std::string &value
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == m_capacity)
+        if (m_pairs.size() == capacity())
             evict();
 
         m_pairs.push_front({key, value});

@@ -21,7 +21,7 @@ class MERE_CACHE_LIB_SPEC LIFOCache : public Mere::Cache::Cache
 {
 public:
     ~LIFOCache();
-    explicit LIFOCache(int capacity);
+    explicit LIFOCache(std::size_t capacity);
 
     bool has(const std::string &key) override;
     std::string get(const std::string &key, bool *flag = nullptr) override;
@@ -31,8 +31,6 @@ public:
     void print();
 
 private:
-    int m_capacity;
-
     std::stack<CacheIterator> m_pairs;
     std::unordered_map<Key, Value> m_cache;
 };

@@ -1,13 +1,12 @@
 #include "fifocache.h"
 
 #include <iostream>
-
 Mere::Cache::FIFOCache::~FIFOCache()
 {
 }
 
-Mere::Cache::FIFOCache::FIFOCache(int capacity)
-    : m_capacity(capacity)
+Mere::Cache::FIFOCache::FIFOCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity)
 {
 }
 
@@ -50,7 +49,7 @@ void Mere::Cache::FIFOCache::set(const std::string &key, const std::string &valu
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == m_capacity)
+        if (m_pairs.size() == capacity())
             evict();
 
         auto pair = m_cache.insert({key, value});
@@ -67,6 +66,9 @@ void Mere::Cache::FIFOCache::set(const std::string &key, const std::string &valu
 
 void Mere::Cache::FIFOCache::evict()
 {
+    if (m_cache.empty()) return;
+    if (m_pairs.empty()) return;
+
     m_cache.erase(m_pairs.front());
     m_pairs.pop();
 }

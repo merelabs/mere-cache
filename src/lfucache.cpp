@@ -4,8 +4,8 @@ Mere::Cache::LFUCache::~LFUCache()
 {
 }
 
-Mere::Cache::LFUCache::LFUCache(int capacity)
-    : m_capacity(capacity)
+Mere::Cache::LFUCache::LFUCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity)
 {
 }
 
@@ -53,7 +53,7 @@ void Mere::Cache::LFUCache::set(const std::string &key, const std::string &value
     {
         if (flag) *flag = false;
 
-        if (m_frequency.size() == m_capacity)
+        if (m_frequency.size() == capacity())
             evict();
 
         auto fit = m_frequency.insert({1, key});

@@ -1,14 +1,12 @@
 #include "lifocache.h"
-
 #include <iostream>
-#include <algorithm>
 
 Mere::Cache::LIFOCache::~LIFOCache()
 {
 }
 
-Mere::Cache::LIFOCache::LIFOCache(int capacity)
-    : m_capacity(capacity)
+Mere::Cache::LIFOCache::LIFOCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity)
 {
 }
 
@@ -51,7 +49,7 @@ void Mere::Cache::LIFOCache::set(const std::string &key, const std::string &valu
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == m_capacity)
+        if (m_pairs.size() == capacity())
             evict();
 
         auto pair = m_cache.insert({key, value});

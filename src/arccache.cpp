@@ -6,11 +6,11 @@ Mere::Cache::ARCCache::~ARCCache()
 }
 
 Mere::Cache::ARCCache::ARCCache(int capacity)
-    : m_capacity(capacity * 2),
-      m_lrusize(capacity),
-      m_lrughostsize(capacity),
-      m_lfusize(capacity),
-      m_lfughostsize(capacity)
+    : Mere::Cache::Cache(capacity),
+      m_lrusize(std::floor(capacity/2)),
+      m_lrughostsize(std::floor(capacity/2)),
+      m_lfusize(std::ceil(capacity/2)),
+      m_lfughostsize(std::ceil(capacity/2))
 {
 }
 

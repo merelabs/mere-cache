@@ -22,7 +22,7 @@ class MERE_CACHE_LIB_SPEC LFUCache : public Mere::Cache::Cache
 {
 public:
     ~LFUCache();
-    explicit LFUCache(int capacity);
+    explicit LFUCache(std::size_t capacity);
 
     bool has(const std::string &key) override;
     std::string get(const std::string &key, bool *flag = nullptr) override;
@@ -32,8 +32,6 @@ public:
     void print();
 
 private:
-    int m_capacity;
-
     std::multimap<Freequency, Key> m_frequency;
     std::unordered_map<Key, std::pair<Value, FreequencyIterator> > m_cache;
 };

@@ -22,7 +22,7 @@ class MERE_CACHE_LIB_SPEC LRUCache : public Mere::Cache::Cache
 {
 public:
     ~LRUCache();
-    explicit LRUCache(int capacity);
+    explicit LRUCache(std::size_t capacity);
 
     bool has(const std::string &key) override;
     std::string get(const std::string &key, bool *flag = nullptr) override;
@@ -32,8 +32,6 @@ public:
     void print();
 
 private:
-    int m_capacity;
-
     std::list<Pair> m_pairs;
     std::unordered_map<Key, PairIterator> m_cache;
 };

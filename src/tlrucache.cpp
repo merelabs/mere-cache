@@ -1,17 +1,12 @@
 #include "tlrucache.h"
-
 #include <iostream>
-#include <algorithm>
-
 
 Mere::Cache::TLRUCache::~TLRUCache()
 {
-
 }
 
-Mere::Cache::TLRUCache::TLRUCache(int capacity)
-    : Mere::Cache::Cache(),
-      m_capacity(capacity),
+Mere::Cache::TLRUCache::TLRUCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity),
       m_age(60)
 {
 }
@@ -92,7 +87,7 @@ void Mere::Cache::TLRUCache::set(const std::string &key, const std::string &valu
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == m_capacity)
+        if (m_pairs.size() == capacity())
             evict();
 
         m_pairs.push_back({key, value});

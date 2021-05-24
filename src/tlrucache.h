@@ -25,7 +25,7 @@ class MERE_CACHE_LIB_SPEC TLRUCache : public Mere::Cache::Cache
 {
 public:
     ~TLRUCache();
-    TLRUCache(int capacity);
+    TLRUCache(std::size_t capacity);
 
     void age(const Age &age);
     Age age() const;
@@ -38,7 +38,6 @@ public:
     void print();
 
 private:
-    int m_capacity;
     Age m_age;
 
     std::list<Pair> m_pairs;

@@ -1,14 +1,12 @@
 #include "lrucache.h"
 #include <iostream>
-#include <algorithm>
-#include <utility>
 
 Mere::Cache::LRUCache::~LRUCache()
 {
 }
 
-Mere::Cache::LRUCache::LRUCache(int capacity)
-    : m_capacity(capacity)
+Mere::Cache::LRUCache::LRUCache(std::size_t capacity)
+    : Mere::Cache::Cache(capacity)
 {
 }
 
@@ -55,7 +53,7 @@ void Mere::Cache::LRUCache::set(const std::string &key, const std::string &value
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == m_capacity)
+        if (m_pairs.size() == capacity())
             evict();
 
         m_pairs.push_back({key, value});
