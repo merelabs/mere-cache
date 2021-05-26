@@ -1,10 +1,10 @@
-#ifndef MERE_CACHE_FIFOCACHE_H
-#define MERE_CACHE_FIFOCACHE_H
+#ifndef MERE_CACHE_LIFOCACHE_H
+#define MERE_CACHE_LIFOCACHE_H
 
 #include "global.h"
 #include "cache.hpp"
 
-#include <queue>
+#include <stack>
 #include <unordered_map>
 #include <iostream>
 
@@ -14,28 +14,21 @@ namespace Cache
 {
 
 template <typename Key, typename Value>
-class MERE_CACHE_LIB_SPEC FIFOCache : public Mere::Cache::Cache<Key, Value>
+class MERE_CACHE_LIB_SPEC LIFOCache : public Mere::Cache::Cache<Key, Value>
 {
 public:
-    explicit FIFOCache(std::size_t capacity)
+    explicit LIFOCache(std::size_t capacity)
         : Mere::Cache::Cache<Key, Value>(capacity)
     {
     }
 
     bool has(const Key &key) override
     {
-//        if (key.empty()) return false;
         return m_cache.find(key) != m_cache.cend();
     }
 
     Value get(const Key &key, bool *flag = nullptr) override
     {
-//        if (key.empty())
-//        {
-//            if (flag) *flag = false;
-//            return "";
-//        }
-
         auto it = m_cache.find(key);
         if (it == m_cache.cend())
         {
@@ -44,25 +37,18 @@ public:
         }
 
         if (flag) *flag = true;
-
         return it->second;
     }
 
     void set(const Key &key, const Value &value, bool *flag = nullptr) override
     {
-//        if (key.empty())
-//        {
-//            if (flag) *flag = false;
-//            return;
-//        }
-
         auto it = m_cache.find(key);
         if (it == m_cache.cend())
         {
             if (flag) *flag = false;
 
-        if (m_pairs.size() == this->capacity())
-            evict();
+            if (m_pairs.size() == this->capacity())
+                evict();
 
             auto pair = m_cache.insert({key, value});
             m_pairs.push(pair.first);
@@ -70,18 +56,15 @@ public:
         else
         {
             if (flag) *flag = true;
-            m_cache.insert({key, value});
 
-            // do we need to change the position in queue?
+            if (flag) *flag = true;
+            m_cache.insert({key, value});
         }
     }
 
     void evict() override
     {
-        if (m_cache.empty()) return;
-        if (m_pairs.empty()) return;
-
-        m_cache.erase(m_pairs.front());
+        m_cache.erase(m_pairs.top());
         m_pairs.pop();
     }
 
@@ -93,11 +76,12 @@ public:
 
 private:
     typedef typename std::unordered_map<Key, Value>::iterator CacheIterator;
-    std::queue<CacheIterator> m_pairs;
+
+    std::stack<CacheIterator> m_pairs;
     std::unordered_map<Key, Value> m_cache;
 };
 
 }
 }
 
-#endif // MERE_CACHE_FIFOCACHE_H
+#endif // MERE_CACHE_LIFOCACHE_H

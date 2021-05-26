@@ -22,10 +22,9 @@ SOURCES += \
 #    src/tlrucache.cpp
 
 HEADERS += \
-    src/global.h \
     src/cache.hpp \
     src/fifocache.hpp \
-#    src/lifocache.h \
+    src/lifocache.hpp \
 #    src/lfucache.h \
 #    src/lirscache.h \
 #    src/lrfucache.h \
@@ -33,6 +32,7 @@ HEADERS += \
 #    src/mfucache.h \
 #    src/mrucache.h \
 #    src/tlrucache.h
+    src/global.h
 
 
 INCLUDEPATH += /usr/local/include

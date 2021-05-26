@@ -1,5 +1,5 @@
 #include "testlifocache.h"
-#include "mere/cache/lifocache.h"
+#include "mere/cache/lifocache.hpp"
 
 void TestLIFOCache::initTestCase()
 {
