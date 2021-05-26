@@ -1,23 +1,27 @@
 #include "lifocache.h"
 #include <iostream>
 
-Mere::Cache::LIFOCache::~LIFOCache()
+template <typename K, typename V>
+Mere::Cache::LIFOCache<K, V>::~LIFOCache()
 {
 }
 
-Mere::Cache::LIFOCache::LIFOCache(std::size_t capacity)
-    : Mere::Cache::Cache(capacity)
+template <typename K, typename V>
+Mere::Cache::LIFOCache<K, V>::LIFOCache(std::size_t capacity)
+    : Mere::Cache::Cache<K, V>(capacity)
 {
 }
 
-bool Mere::Cache::LIFOCache::has(const std::string &key)
+template <typename K, typename V>
+bool Mere::Cache::LIFOCache<K, V>::has(const K &key)
 {
     if (key.empty()) return false;
 
     return m_cache.find(key) != m_cache.cend();
 }
 
-std::string Mere::Cache::LIFOCache::get(const std::string &key, bool *flag)
+template <typename K, typename V>
+V Mere::Cache::LIFOCache<K, V>::get(const K &key, bool *flag)
 {
     if (key.empty())
     {
@@ -36,7 +40,8 @@ std::string Mere::Cache::LIFOCache::get(const std::string &key, bool *flag)
     return it->second;
 }
 
-void Mere::Cache::LIFOCache::set(const std::string &key, const std::string &value, bool *flag)
+template <typename K, typename V>
+void Mere::Cache::LIFOCache<K, V>::set(const K &key, const V &value, bool *flag)
 {
     if (key.empty())
     {
@@ -49,7 +54,7 @@ void Mere::Cache::LIFOCache::set(const std::string &key, const std::string &valu
     {
         if (flag) *flag = false;
 
-        if (m_pairs.size() == capacity())
+        if (m_pairs.size() == this->capacity())
             evict();
 
         auto pair = m_cache.insert({key, value});
@@ -64,13 +69,15 @@ void Mere::Cache::LIFOCache::set(const std::string &key, const std::string &valu
     }
 }
 
-void Mere::Cache::LIFOCache::evict()
+template <typename K, typename V>
+void Mere::Cache::LIFOCache<K, V>::evict()
 {
     m_cache.erase(m_pairs.top());
     m_pairs.pop();
 }
 
-void Mere::Cache::LIFOCache::print()
+template <typename K, typename V>
+void Mere::Cache::LIFOCache<K, V>::print()
 {
     for (auto& cache : m_cache)
         std::cout << cache.first << "\t => " << cache.second << std::endl;

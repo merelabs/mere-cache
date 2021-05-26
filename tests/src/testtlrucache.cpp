@@ -11,7 +11,7 @@ void TestTLRUCache::cleanupTestCase()
 
 void TestTLRUCache::testset()
 {
-    Mere::Cache::TLRUCache cache(2);
+    Mere::Cache::TLRUCache<std::string, std::string> cache(2);
     cache.set("a", "first character");
 
     QVERIFY(cache.get("a").compare("first character") == 0);
@@ -22,7 +22,7 @@ void TestTLRUCache::testset()
 
 void TestTLRUCache::testevict()
 {
-    Mere::Cache::TLRUCache cache(2);
+    Mere::Cache::TLRUCache<std::string, std::string> cache(2);
     cache.set("a", "first character");
 
     bool set;

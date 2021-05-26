@@ -11,31 +11,28 @@ DEFINES += LIB_VERSION=\\\"$$VERSION\\\"
 DEFINES += MERE_XDG_LIB
 
 SOURCES += \
-    src/cache.cpp \
-    src/arccache.cpp \
-    src/fifocache.cpp \
-    src/lfucache.cpp \
-    src/lifocache.cpp \
-    src/lirscache.cpp \
-    src/lrfucache.cpp \
-    src/lrucache.cpp \
-    src/mfucache.cpp \
-    src/mrucache.cpp \
-    src/tlrucache.cpp
+#    src/arccache.cpp \
+#    src/lifocache.cpp \
+#    src/lfucache.cpp \
+#    src/lirscache.cpp \
+#    src/lrfucache.cpp \
+#    src/lrucache.cpp \
+#    src/mfucache.cpp \
+#    src/mrucache.cpp \
+#    src/tlrucache.cpp
 
 HEADERS += \
-    src/cache.h \
-    src/arccache.h \
-    src/fifocache.h \
     src/global.h \
-    src/lfucache.h \
-    src/lifocache.h \
-    src/lirscache.h \
-    src/lrfucache.h \
-    src/lrucache.h \
-    src/mfucache.h \
-    src/mrucache.h \
-    src/tlrucache.h
+    src/cache.hpp \
+    src/fifocache.hpp \
+#    src/lifocache.h \
+#    src/lfucache.h \
+#    src/lirscache.h \
+#    src/lrfucache.h \
+#    src/lrucache.h \
+#    src/mfucache.h \
+#    src/mrucache.h \
+#    src/tlrucache.h
 
 
 INCLUDEPATH += /usr/local/include

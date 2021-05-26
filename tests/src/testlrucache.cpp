@@ -11,7 +11,7 @@ void TestLRUCache::cleanupTestCase()
 
 void TestLRUCache::testset()
 {
-    Mere::Cache::LRUCache cache(2);
+    Mere::Cache::LRUCache<std::string, std::string> cache(2);
     cache.set("a", "first character");
 
     QVERIFY(cache.get("a").compare("first character") == 0);
@@ -22,7 +22,7 @@ void TestLRUCache::testset()
 
 void TestLRUCache::testevict()
 {
-    Mere::Cache::LRUCache cache(2);
+    Mere::Cache::LRUCache<std::string, std::string> cache(2);
     cache.set("a", "first character");
 
     bool set;

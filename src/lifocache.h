@@ -12,27 +12,27 @@ namespace Mere
 namespace Cache
 {
 
-typedef std::string Key;
-typedef std::string Value;
+//typedef std::unordered_map<Key, Value>::iterator CacheIterator;
 
-typedef std::unordered_map<Key, Value>::iterator CacheIterator;
-
-class MERE_CACHE_LIB_SPEC LIFOCache : public Mere::Cache::Cache
+template <typename K, typename V>
+class MERE_CACHE_LIB_SPEC LIFOCache : public Mere::Cache::Cache<K, V>
 {
 public:
     ~LIFOCache();
     explicit LIFOCache(std::size_t capacity);
 
-    bool has(const std::string &key) override;
-    std::string get(const std::string &key, bool *flag = nullptr) override;
-    void set(const std::string &key, const std::string &value, bool *flag = nullptr) override;
+    bool has(const K &key) override;
+    V get(const K &key, bool *flag = nullptr) override;
+    void set(const K &key, const V &value, bool *flag = nullptr) override;
     void evict() override;
 
     void print();
 
 private:
+    typedef typename std::unordered_map<K, V>::iterator CacheIterator;
+
     std::stack<CacheIterator> m_pairs;
-    std::unordered_map<Key, Value> m_cache;
+    std::unordered_map<K, V> m_cache;
 };
 
 }

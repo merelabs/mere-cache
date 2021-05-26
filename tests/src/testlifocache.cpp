@@ -11,7 +11,7 @@ void TestLIFOCache::cleanupTestCase()
 
 void TestLIFOCache::testset()
 {
-    Mere::Cache::LIFOCache cache(2);
+    Mere::Cache::LIFOCache<std::string, std::string> cache(2);
     cache.set("a", "first character");
 
     QVERIFY(cache.get("a").compare("first character") == 0);
@@ -22,7 +22,7 @@ void TestLIFOCache::testset()
 
 void TestLIFOCache::testevict()
 {
-    Mere::Cache::LIFOCache cache(2);
+    Mere::Cache::LIFOCache<std::string, std::string> cache(2);
     cache.set("a", "A");
     cache.set("b", "B");
 
