@@ -13,7 +13,7 @@ DEFINES += MERE_XDG_LIB
 SOURCES += \
 #    src/arccache.cpp \
 #    src/lifocache.cpp \
-#    src/lfucache.cpp \
+    src/lfucache.cpp \
 #    src/lirscache.cpp \
 #    src/lrfucache.cpp \
 #    src/lrucache.cpp \
@@ -24,14 +24,14 @@ SOURCES += \
 HEADERS += \
     src/cache.hpp \
     src/fifocache.hpp \
+    src/lfucache.hpp \
     src/lifocache.hpp \
-#    src/lfucache.h \
+    src/lrucache.hpp \
+#    src/tlrucache.hpp \
 #    src/lirscache.h \
 #    src/lrfucache.h \
-#    src/lrucache.h \
 #    src/mfucache.h \
 #    src/mrucache.h \
-#    src/tlrucache.h
     src/global.h
 
 
@@ -53,10 +53,7 @@ unix {
         } else {
             sdir = $$replace(sdir, "src/", "")
         }
-#        message($$sdir)
-
         path = $${INSTALL_PREFIX}$${sdir}
-#        message($$path)
         eval(headers_$${path}.files += $$header)
         eval(headers_$${path}.path = $$path)
         eval(INSTALLS *= headers_$${path})

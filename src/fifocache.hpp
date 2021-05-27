@@ -24,18 +24,11 @@ public:
 
     bool has(const Key &key) override
     {
-//        if (key.empty()) return false;
         return m_cache.find(key) != m_cache.cend();
     }
 
     Value get(const Key &key, bool *flag = nullptr) override
     {
-//        if (key.empty())
-//        {
-//            if (flag) *flag = false;
-//            return "";
-//        }
-
         auto it = m_cache.find(key);
         if (it == m_cache.cend())
         {
@@ -50,12 +43,6 @@ public:
 
     void set(const Key &key, const Value &value, bool *flag = nullptr) override
     {
-//        if (key.empty())
-//        {
-//            if (flag) *flag = false;
-//            return;
-//        }
-
         auto it = m_cache.find(key);
         if (it == m_cache.cend())
         {

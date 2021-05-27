@@ -1,5 +1,5 @@
 #include "testlrucache.h"
-#include "mere/cache/lrucache.h"
+#include "mere/cache/lrucache.hpp"
 
 void TestLRUCache::initTestCase()
 {
