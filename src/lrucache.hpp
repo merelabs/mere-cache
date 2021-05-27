@@ -4,10 +4,6 @@
 #include "global.h"
 #include "rucache.hpp"
 
-#include <list>
-#include <unordered_map>
-#include <iostream>
-
 namespace Mere
 {
 namespace Cache

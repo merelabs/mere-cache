@@ -4,9 +4,6 @@
 #include "global.h"
 #include "rucache.hpp"
 
-#include <list>
-#include <unordered_map>
-
 namespace Mere
 {
 namespace Cache
@@ -19,7 +16,6 @@ public:
     explicit MRUCache(std::size_t capacity)
         : Mere::Cache::Cache<Key, Value>(capacity)
     {
-
     }
 
     void evict() override
