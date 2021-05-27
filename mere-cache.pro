@@ -10,29 +10,16 @@ DEFINES += LIB_NAME=\\\"$$TARGET\\\"
 DEFINES += LIB_VERSION=\\\"$$VERSION\\\"
 DEFINES += MERE_XDG_LIB
 
-SOURCES += \
-#    src/arccache.cpp \
-#    src/lifocache.cpp \
-    src/lfucache.cpp \
-#    src/lirscache.cpp \
-#    src/lrfucache.cpp \
-#    src/lrucache.cpp \
-#    src/mfucache.cpp \
-#    src/mrucache.cpp \
-#    src/tlrucache.cpp
-
 HEADERS += \
+    src/arccache.hpp \
     src/cache.hpp \
     src/fifocache.hpp \
     src/lfucache.hpp \
     src/lifocache.hpp \
     src/lrucache.hpp \
-#    src/tlrucache.hpp \
-#    src/lirscache.h \
-#    src/lrfucache.h \
-#    src/mfucache.h \
-#    src/mrucache.h \
-    src/global.h
+    src/mrucache.hpp \
+    src/global.h \
+    src/rucache.hpp
 
 
 INCLUDEPATH += /usr/local/include
@@ -59,4 +46,6 @@ unix {
         eval(INSTALLS *= headers_$${path})
     }
 }
+
+SOURCES +=
 
