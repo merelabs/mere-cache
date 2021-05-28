@@ -7,6 +7,7 @@ An simple utility library contains common cache policy implementation that are u
 - lru
 - lfu
 - mru
+- mfu
 - arc
 
 ## requires
