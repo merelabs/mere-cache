@@ -14,9 +14,11 @@ HEADERS += \
     src/arccache.hpp \
     src/cache.hpp \
     src/fifocache.hpp \
+    src/fucache.hpp \
     src/lfucache.hpp \
     src/lifocache.hpp \
     src/lrucache.hpp \
+    src/mfucache.hpp \
     src/mrucache.hpp \
     src/global.h \
     src/rucache.hpp

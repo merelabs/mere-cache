@@ -1,5 +1,5 @@
-#ifndef MERE_CACHE_LFUCACHE_H
-#define MERE_CACHE_LFUCACHE_H
+#ifndef MERE_CACHE_MFUCACHE_H
+#define MERE_CACHE_MFUCACHE_H
 
 #include "global.h"
 #include "fucache.hpp"
@@ -13,10 +13,10 @@ typedef unsigned int Freequency;
 
 
 template <typename Key, typename Value>
-class MERE_CACHE_LIB_SPEC LFUCache : public Mere::Cache::FUCache<Key, Value>
+class MERE_CACHE_LIB_SPEC MFUCache : public Mere::Cache::FUCache<Key, Value>
 {
 public:
-    explicit LFUCache(std::size_t capacity)
+    explicit MFUCache(std::size_t capacity)
         : Mere::Cache::FUCache<Key, Value>(capacity)
     {
     }
@@ -26,7 +26,7 @@ public:
         if (Mere::Cache::FUCache<Key, Value>::m_cache.empty()) return;
         if (Mere::Cache::FUCache<Key, Value>::m_frequency.empty()) return;
 
-        auto fit = Mere::Cache::FUCache<Key, Value>::m_frequency.begin();
+        auto fit = std::prev(Mere::Cache::FUCache<Key, Value>::m_frequency.end());
         Mere::Cache::FUCache<Key, Value>::m_cache.erase(fit->second);
         Mere::Cache::FUCache<Key, Value>::m_frequency.erase(fit);
     }
@@ -35,4 +35,5 @@ public:
 };
 }
 }
-#endif // MERE_CACHE_LFUCACHE_H
+
+#endif // MERE_CACHE_MFUCACHE_H

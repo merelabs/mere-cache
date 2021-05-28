@@ -54,7 +54,7 @@ public:
             if (m_pairs.size() == this->capacity())
                 evict();
 
-            m_pairs.push_front({key, value});
+            m_pairs.push_back({key, value});
         }
         else
         {
@@ -63,7 +63,7 @@ public:
                 m_pairs.splice(m_pairs.end(), m_pairs, it->second);
         }
 
-        m_cache.insert({key, m_pairs.begin()});
+        m_cache.insert({key, std::prev(m_pairs.end())});
     }
 
     virtual void evict() override
@@ -73,6 +73,9 @@ public:
 
     void print()
     {
+        for (auto& pair : m_pairs)
+            std::cout << pair.first << "\t => " << pair.second << std::endl;
+
         for (auto& cache : m_cache)
             std::cout << cache.first << "\t => " << cache.second->second << std::endl;
     }
