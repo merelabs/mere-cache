@@ -15,7 +15,8 @@ An simple utility library contains common cache policy implementation that are u
 
 ## required
 `mere-cache` is required by following app, utility and libaries,
-- [mere-xdg](https://github.com/merelabs/mere-xdg-lib)
+- [mere-link-cache](https://github.com/merelabs/mere-link-cache)
+- [mere-xdg](https://github.com/merelabs/mere-xdg)
 - [mere-finder-app](https://github.com/merelabs/mere-finder-app)
 
 ## build ##
