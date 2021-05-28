@@ -53,11 +53,11 @@ public:
         }
 
         // evict if full...
-        evictLFU();
+        evictLFUCache();
 
         // update freequency
-        auto fit = m_frequency.insert({ it->second.second->first + 1, it->second.second->second});
-        m_frequency.erase(it->second.second);
+        auto fit = m_cacheFrequency.insert({ it->second.second->first + 1, it->second.second->second});
+        m_cacheFrequency.erase(it->second.second);
         it->second.second = fit;
 
         if (flag) *flag = true;
@@ -71,9 +71,9 @@ public:
         {
             if (flag) *flag = false;
 
-            evictLRU();
+            evictLRUCache();
 
-            auto fit = m_frequency.insert({1, key});
+            auto fit = m_cacheFrequency.insert({1, key});
             m_cache.insert({key, {value, fit}});
         }
         else
@@ -91,79 +91,102 @@ public:
     void print();
 
 private:
-    void evictLRU()
+    void evictLRUCache()
     {
-        if (m_frequency.empty()) return;
-
-        auto fit = m_frequency.upper_bound(1);
-        if (fit == m_frequency.begin()) return;
-
-        std::size_t size = std::distance(m_frequency.begin(), fit);
-        if (size == m_lrusize)
+        if (lrusize() == m_lrusize)
         {
             // evict from 1
-            auto rit = m_frequency.lower_bound(1);
+            auto rit = m_cacheFrequency.lower_bound(1);
 
-            if (m_lrughost.size() == m_lrughostsize)
-                evictLRUHistory();
+            if (lrughostsize() == m_lrughostsize)
+                evictLRUGhost();
 
             m_ghost.insert({rit->second, rit->first});
 
             m_cache.erase(rit->second);
-            m_frequency.erase(rit);
+            m_cacheFrequency.erase(rit);
         }
     }
 
-    void evictLFU()
+    void evictLFUCache()
     {
-        if (m_frequency.empty()) return;
-
-        auto fit = m_frequency.upper_bound(1);
-        if (fit == m_frequency.end()) return;
-
-        size_t size = std::distance(m_frequency.end(), fit);
-        if (size == m_lfusize)
+        if (lfusize() == m_lfusize)
         {
-            if (m_lfughost.size() == m_lfughostsize)
-                evictLFUHistory();
+            if (lfughostsize() == m_lfughostsize)
+                evictLFUGhost();
 
+            auto fit = m_cacheFrequency.upper_bound(1);
             m_ghost.insert({fit->second, fit->first});
 
             m_cache.erase(fit->second);
-            m_frequency.erase(fit);
+            m_cacheFrequency.erase(fit);
         }
     }
 
-    void evictLRUHistory()
+    void evictLRUGhost()
     {
-        if (m_ghost.empty()) return;
-        if (m_lrughost.empty()) return;
+        if (lrughostsize() != m_lrughostsize)
+            return;
 
-        m_ghost.erase(m_lrughost.front());
-        m_lrughost.pop_front();
+        auto rit = m_ghostFrequency.begin();
+        m_ghost.erase(rit->second);
+        m_ghostFrequency.erase(rit);
     }
 
-    void evictLFUHistory()
+    void evictLFUGhost()
     {
-        if (m_ghost.empty()) return;
-        if (m_lfughost.empty()) return;
+        if (lfughostsize() != m_lfughostsize)
+            return;
 
-        m_ghost.erase(m_lfughost.front());
-        m_lfughost.pop_front();
+        auto fit = m_ghostFrequency.upper_bound(1);
+        m_ghost.erase(fit->second);
+        m_ghostFrequency.erase(fit);
     }
 
     void adaptLRU()
     {
-        evictLFU();
+        evictLFUCache();
         m_lfusize--;
         m_lrusize++;
     }
 
     void adaptLFU()
     {
-        evictLRU();
+        evictLRUCache();
         m_lrusize--;
         m_lfusize++;
+    }
+
+    std::size_t lrusize() const
+    {
+        auto fit = m_cacheFrequency.upper_bound(1);
+        if (fit == m_cacheFrequency.begin()) return 0;
+
+        return std::distance(m_cacheFrequency.begin(), fit);
+    }
+
+    std::size_t lfusize() const
+    {
+        auto fit = m_cacheFrequency.upper_bound(1);
+        if (fit == m_cacheFrequency.end()) return 0;
+
+        return std::distance(m_cacheFrequency.end(), fit);
+    }
+
+    std::size_t lrughostsize() const
+    {
+        auto fit = m_ghostFrequency.upper_bound(1);
+        if (fit == m_ghostFrequency.begin()) return 0;
+
+        return std::distance(m_ghostFrequency.begin(), fit);
+    }
+
+    std::size_t lfughostsize() const
+    {
+        auto fit = m_ghostFrequency.upper_bound(1);
+        if (fit == m_ghostFrequency.end()) return 0;
+
+        return std::distance(m_ghostFrequency.end(), fit);
     }
 
 private:
@@ -173,15 +196,12 @@ private:
     std::size_t m_lfusize;
     std::size_t m_lfughostsize;
 
-    typedef typename std::multimap<Key, Freequency>::iterator GhostIterator;
     typedef typename std::multimap<Freequency, Key>::iterator FreequencyIterator;
 
-    std::list<GhostIterator> m_lrughost;
-    std::list<GhostIterator> m_lfughost;
+    std::multimap<Freequency, Key> m_ghostFrequency;
+    std::unordered_map<Key, FreequencyIterator> m_ghost;
 
-    std::unordered_map<Key, Freequency> m_ghost;
-
-    std::multimap<Freequency, Key> m_frequency;
+    std::multimap<Freequency, Key> m_cacheFrequency;
     std::unordered_map<Key, std::pair<Value, FreequencyIterator> > m_cache;
 };
 
