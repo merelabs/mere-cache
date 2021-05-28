@@ -14,7 +14,7 @@ class MERE_CACHE_LIB_SPEC MRUCache : public Mere::Cache::RUCache<Key, Value>
 {
 public:
     explicit MRUCache(std::size_t capacity)
-        : Mere::Cache::Cache<Key, Value>(capacity)
+        : Mere::Cache::RUCache<Key, Value>(capacity)
     {
     }
 

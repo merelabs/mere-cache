@@ -9,11 +9,11 @@ class TestARCCache : public QObject
 public:
     TestARCCache(){};
 
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
-    void testset();
-    void testevict();
+//private slots:
+//    void initTestCase();
+//    void cleanupTestCase();
+//    void testset();
+//    void testevict();
 };
 
 #endif // TESTARCCACHE_H
