@@ -4,6 +4,7 @@
 #include "testlfucache.h"
 #include "testtlrucache.h"
 #include "testmrucache.h"
+#include "testmfucache.h"
 #include "testarccache.h"
 
 int main(int argc, char** argv)
@@ -31,6 +32,10 @@ int main(int argc, char** argv)
     }
     {
         TestMRUCache test;
+        status |= QTest::qExec(&test, argc, argv);
+    }
+    {
+        TestMFUCache test;
         status |= QTest::qExec(&test, argc, argv);
     }
     {

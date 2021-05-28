@@ -15,6 +15,7 @@ SOURCES += \
     src/testlfucache.cpp \
     src/testlifocache.cpp \
     src/testlrucache.cpp \
+    src/testmfucache.cpp \
     src/testmrucache.cpp \
     src/testtlrucache.cpp
 
@@ -24,6 +25,7 @@ HEADERS += \
     src/testlfucache.h \
     src/testlifocache.h \
     src/testlrucache.h \
+    src/testmfucache.h \
     src/testmrucache.h \
     src/testtlrucache.h
 
